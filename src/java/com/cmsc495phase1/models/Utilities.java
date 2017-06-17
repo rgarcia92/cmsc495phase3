@@ -38,7 +38,52 @@ public class Utilities {
         /* Check for mobile browser */
         return request.getHeader("User-Agent").toLowerCase().contains("mobi");
     }
-    
+
+    /**
+     * Retrieve the appropriate regex pattern based on key selected
+     * @param keypadLetterGroup the key number from the key selected
+     * @return regex string
+     */      
+    public static String getPattern(int keypadLetterGroup) {
+        String pattern;
+        /* Select regex pattern based on key selected */
+        switch (keypadLetterGroup) {
+            case 1:
+                pattern = "^[A-Ca-c]";
+                break;
+            case 2:
+                pattern = "^[D-Fd-f]";
+                break;
+            case 3:
+                pattern = "^[G-Ig-i]";
+                break;
+            case 4:
+                pattern = "^[J-Lj-l]";
+                break;
+            case 5:
+                pattern = "^[M-Om-o]";
+                break;
+            case 6:
+                pattern = "^[P-Rp-r]";
+                break;
+            case 7:
+                pattern = "^[S-Us-u]";
+                break;
+            case 8:
+                pattern = "^[V-Xv-x]";
+                break;
+            case 9:
+                pattern = "^[Y-Zy-z]";
+                break;
+            case 0:
+            default:
+                /* Select all data */
+                pattern = "^[A-Za-z]";
+                break;
+        }
+        return pattern;
+    }
+
     /**
      * Connect to the SQLite database
      * @param dbName the name of the SQLite database to open

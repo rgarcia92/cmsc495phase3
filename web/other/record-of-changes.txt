@@ -7,10 +7,11 @@ Simple "Hello World!" application using Java Server Pages
 Created desktopHome "Hello World!" view
 Created mobileHome "Hello Mobile!" view
 Created model package com.cmsc495phase1.models
-Added Utilities class to models package
-Added isMobile() function to Utilities to detect mobile browsers
+Created Utilities class and added it to the models package
+Added isMobile() method to Utilities to detect mobile browsers
 Created controller package com.cmsc495phase1.controllers
-Added index servlet controller to controllers package to call isMobile() and redirect the HTTP request to the appropriate view
+Created index servlet controller and added it to the controllers package
+Modified doGet() method in index to call isMobile() and redirect the HTTP request to the appropriate view
 Modified web.xml to make index.java the welcome-file
 Deleted index.jsp
 
@@ -35,7 +36,20 @@ Added up-down-arrow.png
 
 v0.14 Separated desktop view
 Separated style.css into desktopStyle.css and mobileStyle.css
-Modified desktopHome view by changing stylesheet to desktopStyle
+Modified desktopHome view by changing stylesheet to desktopStyle.css
 Added under-construction.png
 Created desktopDetails view
 Modified desktopHome view by adding links to desktopDetails view for each medication
+
+v0.15 Separated mobile view
+Modified mobileHome view by changing stylesheet to mobileStyle.css
+Added button.png
+Added getPattern() method to Utilities class
+Added two selectAllMedications() methods (overloaded) to DataAccess class
+Created mobileKeypad view
+Modified mobileHome view by adding links to mobileKeypad view for each button
+Created mobileResults view
+Modified mobileKeypad view by adding links to mobileResults view for each button
+Created mobileDetails view
+Modified mobileResults view by adding links to mobileDetails view for each medication
+Deleted style.css
