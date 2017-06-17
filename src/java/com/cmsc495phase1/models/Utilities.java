@@ -16,6 +16,12 @@
  */
 package com.cmsc495phase1.models;
 
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -31,5 +37,23 @@ public class Utilities {
     public static Boolean isMobile(HttpServletRequest request) {
         /* Check for mobile browser */
         return request.getHeader("User-Agent").toLowerCase().contains("mobi");
+    }
+    
+    /**
+     * Connect to the SQLite database
+     * @param dbName the name of the SQLite database to open
+     * @return the Connection object
+     */    
+    public static Connection connectToDatabase(String dbName) {
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            /* Look for database in the com.cmsc495ems.models package */
+            URL url = Utilities.class.getResource(dbName);
+            conn = DriverManager.getConnection("jdbc:sqlite::resource:" + url);
+        } catch ( ClassNotFoundException | SQLException ex ) {
+            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return conn;        
     }
 }

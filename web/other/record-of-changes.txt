@@ -13,3 +13,17 @@ Created controller package com.cmsc495phase1.controllers
 Added index servlet controller to controllers package to call isMobile() and redirect the HTTP request to the appropriate view
 Modified web.xml to make index.java the welcome-file
 Deleted index.jsp
+
+0.12
+Added sqlite.jdbc-3.18.0.jar to Libraries
+Added connectToDatabase() method to Utilities class
+Created medications.db (see phase1-sql.sql file) and added it to the models package
+Created Medications class and added it to the models package
+Created DataAccess class and added it to the models package
+Added selectMedicationsByGenericName() method to the DataAccess class
+Modified header information in desktopHome and mobileHome views
+Added header, main, and footer semantic elements to both views
+Modified both views to call selectMedicationsByGenericName() and display retrieved data
+
+0.13
+
