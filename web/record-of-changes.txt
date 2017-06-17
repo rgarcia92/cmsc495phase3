@@ -1,0 +1,15 @@
+0.10
+Modified @author tag
+Added GNU GPL 3.0 License Header
+Simple "Hello World!" application using Java Server Pages
+
+0.11
+Created desktopHome "Hello World!" view
+Created mobileHome "Hello Mobile!" view
+Created model package com.cmsc495phase1.models
+Added Utilities class to models package
+Added isMobile() function to Utilities to detect mobile browsers
+Created controller package com.cmsc495phase1.controllers
+Added index servlet controller to controllers package to call isMobile() and redirect the HTTP request to the appropriate view
+Modified web.xml to make index.java the welcome-file
+Deleted index.jsp

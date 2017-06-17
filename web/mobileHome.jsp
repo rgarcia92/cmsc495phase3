@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Jun 15, 2017, 2:47:54 PM
+    Document   : mobileHome
+    Created on : Jun 17, 2017, 8:14:38 AM
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Hello Mobile!</h1>
     </body>
 </html>
