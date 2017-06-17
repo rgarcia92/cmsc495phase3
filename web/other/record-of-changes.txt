@@ -26,4 +26,10 @@ Added header, main, and footer semantic elements to both views
 Modified both views to call selectMedicationsByGenericName() and display retrieved data
 
 0.13
+Created js folder and added jquery-3.2.1.min.js and jquery.tablesorter.combined.js
+Created css folder and style.css
+Added theme.blue.css to css folder
+Modified the desktopHome and mobileHome views to use css and tablesorter JavaScript IOT add sort and filter functionality
+Added noscript warning and search box to both views
+Added up-down-arrow.png
 

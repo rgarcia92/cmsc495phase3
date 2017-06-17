@@ -13,20 +13,43 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CMSC 495 Electronic Medical Reference Project</title
+        <title>CMSC 495 Electronic Medical Reference Project</title>
+        <link type="text/css" href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>
+        <!-- load jQuery and tablesorter scripts -->
+        <link type="text/css" href="${pageContext.request.contextPath}/css/theme.blue.css" rel="stylesheet"/>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tablesorter.combined.js"></script>
+        <script id="js">
+            $(function() {
+                $("#desktopTable").tablesorter({
+                    sortList:[[0,0]],
+                    widgets: ["filter"],
+                    widgetOptions : {
+                        filter_external : '.search',
+                        filter_columnFilters: false,
+                        filter_saveFilters : false,
+                        filter_reset: '.reset'
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
             <h2>Desktop View - Current as of 2017</h2>
+            <noscript>
+                <p class="warningText">(Javascript disabled. Please enable Javascript for full functionality)</p>
+            </noscript>
         </header>
         <main>
-            <table>
+            <div class="searchBox"><b>Search: <input class="search" type="search" placeholder="Search" data-column="all" /></b></div>
+            <table id="desktopTable" class="list tablesorter">
                 <thead>
-                    <tr>
-                        <td><h2>GENERIC NAME</h2></td>
-                        <td><h2>BRAND NAME</h2></td>
-                        <td><h2>CONDITION</h2></td>
+                    <tr class="listTitleRow">
+                        <td><h2>GENERIC NAME <img src="up-down-arrow.png" alt="" /></h2></td>
+                        <td><h2>BRAND NAME <img src="up-down-arrow.png" alt="" /></h2></td>
+                        <td><h2>CONDITION <img src="up-down-arrow.png" alt="" /></h2></td>
                     </tr>
                 </thead>
                 <tbody>
