@@ -1,9 +1,9 @@
-0.10
+0.10 Hello World
 Modified @author tag
 Added GNU GPL 3.0 License Header
 Simple "Hello World!" application using Java Server Pages
 
-0.11
+0.11 Detect browser and redirect to appropriate view
 Created desktopHome "Hello World!" view
 Created mobileHome "Hello Mobile!" view
 Created model package com.cmsc495phase1.models
@@ -14,7 +14,7 @@ Added index servlet controller to controllers package to call isMobile() and red
 Modified web.xml to make index.java the welcome-file
 Deleted index.jsp
 
-0.12
+0.12 SQLite database integration and display data
 Added sqlite.jdbc-3.18.0.jar to Libraries
 Added connectToDatabase() method to Utilities class
 Created medications.db (see phase1-sql.sql file) and added it to the models package
@@ -25,7 +25,7 @@ Modified header information in desktopHome and mobileHome views
 Added header, main, and footer semantic elements to both views
 Modified both views to call selectMedicationsByGenericName() and display retrieved data
 
-0.13
+0.13 Added CSS and tablesorter JavaScript filter/sort functionality
 Created js folder and added jquery-3.2.1.min.js and jquery.tablesorter.combined.js
 Created css folder and style.css
 Added theme.blue.css to css folder
@@ -33,3 +33,9 @@ Modified the desktopHome and mobileHome views to use css and tablesorter JavaScr
 Added noscript warning and search box to both views
 Added up-down-arrow.png
 
+v0.14 Separated desktop view
+Separated style.css into desktopStyle.css and mobileStyle.css
+Modified desktopHome view by changing stylesheet to desktopStyle
+Added under-construction.png
+Created desktopDetails view
+Modified desktopHome view by adding links to desktopDetails view for each medication

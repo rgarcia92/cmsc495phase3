@@ -14,7 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CMSC 495 Electronic Medical Reference Project</title>
-        <link type="text/css" href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>
+        <link type="text/css" href="${pageContext.request.contextPath}/css/desktopStyle.css" rel="stylesheet"/>
         <!-- load jQuery and tablesorter scripts -->
         <link type="text/css" href="${pageContext.request.contextPath}/css/theme.blue.css" rel="stylesheet"/>
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
@@ -59,9 +59,10 @@
                     for(Medications m : medications) {
                         /* Print blood thinners in red */
                         out.print(
+                                /* CSS not working - using style instead */
                                 ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
-                                "<td><h2>" + m.getGName() + "</h2></td>" +
-                                "<td><h2>" + m.getBName() + "</h2></td>" +
+                                "<td><h2><a href=\"desktopDetails.jsp\" title=\"" + m.getGName() + "\">" + m.getGName() + "</a></h2></td>" +
+                                "<td><h2><a href=\"desktopDetails.jsp\" title=\"" + m.getBName() + "\">" + m.getBName() + "</a></h2></td>" +
                                 "<td><h2>" + m.getCond1() + "</h2></td>" +
                                 "</tr>");
                     }
