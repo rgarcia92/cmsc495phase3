@@ -36,7 +36,7 @@ public class Utilities {
      */  
     public static Boolean isMobile(HttpServletRequest request) {
         /* Check for mobile browser */
-        return !request.getHeader("User-Agent").toLowerCase().contains("mobi");
+        return request.getHeader("User-Agent").toLowerCase().contains("mobi");
     }
 
     /**
