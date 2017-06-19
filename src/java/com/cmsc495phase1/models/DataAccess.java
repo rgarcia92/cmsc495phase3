@@ -38,7 +38,7 @@ public class DataAccess {
      */
     public static ArrayList<Medications> selectAllMedications() {
         ArrayList<Medications> allMedications = new ArrayList<>();
-        String sql = "SELECT * FROM medications";
+        String sql = "SELECT * FROM MEDCOMP";
         try {
             Connection conn = Utilities.connectToDatabase("medications.db");
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -84,7 +84,7 @@ public class DataAccess {
      */
     public static ArrayList<Medications> selectAllMedications(int keypadLetterGroup) {
         ArrayList<Medications> allMedications = new ArrayList<>();
-        String sql = "SELECT * FROM medications";
+        String sql = "SELECT * FROM MEDCOMP";
         try {
             /* Get regex pattern to select medications */
             Pattern pattern = Pattern.compile(Utilities.getPattern(keypadLetterGroup));
@@ -136,7 +136,7 @@ public class DataAccess {
      */
     public static ArrayList<Medications> selectMedicationsByGenericName() {
         ArrayList<Medications> allMedications = new ArrayList<>();
-        String sql = "SELECT * FROM medications";
+        String sql = "SELECT * FROM MEDCOMP";
         try {
             Connection conn = Utilities.connectToDatabase("medications.db");
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -162,5 +162,32 @@ public class DataAccess {
         }
         /* Return results */
         return allMedications;
+    }
+    
+    public static Medications getMedicationDetails(int medID) {
+        Medications medication = new Medications();
+        String sql = "SELECT * FROM MEDCOMP WHERE MEDID = " + medID;
+        try {
+            Connection conn = Utilities.connectToDatabase("medications.db");
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            /* Set values here */
+            ResultSet rs = stmt.executeQuery();
+                medication.setMedID(rs.getInt("MEDID"));
+                medication.setGName(rs.getString("GNAME"));
+                medication.setBName(rs.getString("BNAME"));
+                medication.setAction(rs.getString("ACTION"));
+                medication.setCond1(rs.getString("COND1"));
+                medication.setCond2(rs.getString("COND2"));
+                medication.setCond3(rs.getString("COND3"));
+                medication.setDEA(rs.getInt("DEA"));
+                medication.setBTFlag(rs.getInt("BTFLAG"));
+                medication.setSide_Effects(rs.getString("SIDE_EFFECTS"));
+                medication.setInteractions(rs.getString("INTERACTIONS"));
+                medication.setWarnings(rs.getString("WARNINGS"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* Return results */
+        return medication;        
     }
 }

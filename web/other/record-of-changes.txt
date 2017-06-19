@@ -53,3 +53,16 @@ Modified mobileKeypad view by adding links to mobileResults view for each button
 Created mobileDetails view
 Modified mobileResults view by adding links to mobileDetails view for each medication
 Deleted style.css
+
+v0.16 Populated medication detail pages
+Modified medications.db by adding additional conditions, action, DEA Schedule, side effects, interactions, warnings
+Modified Medications class by adding new elements and overloading the constructor
+Modified DataAccess class to use MEDCOMP table in medications.db
+Added getMedicationDetails method to DataAccess class
+Modified desktopHome to send query string to desktopDetails
+Modified desktopDetails to display medication information
+Formated desktopDetails css
+Modified mobileHome to send query string to mobileDetails
+Modified mobileDetails to display medication information
+Formated mobileDetails css
+

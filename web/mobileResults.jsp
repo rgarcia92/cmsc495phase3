@@ -25,18 +25,20 @@
                     /* Retrieve POST parameter */
                     String keypadLetterGroup = request.getParameter("button");
                     if (Integer.parseInt(keypadLetterGroup) < 20) {
-                        out.println("<tr class=\"listTitleRow\"><td><h2><i>NAME:</i></h2></td><td><h2><i>CONDITION:</i></h2></td></tr>");
+                        out.println("<tr class=\"listTitleRow\"><td><h2>NAME:</h2></td><td><h2>CONDITION:</h2></td></tr>");
                         /* Get data from model and display on page */
                         /* Remove flag value */
                         ArrayList<Medications> medications = DataAccess.selectAllMedications(Integer.parseInt(keypadLetterGroup) - 10);
                         for(Medications m : medications) {
                         /* Print blood thinners in red */
-                            out.println(
+                            out.print(
                                 /* CSS not working - using style instead */
-                                    ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
-                                            "<td><h2><a href=\"mobileDetails.jsp\">" + m.getGName() + " <span class=\"listAKA\">aka</span> " + m.getBName() + "</a></h2></td>" +
-                                            "<td><h2>" + m.getCond1() + "</h2></td>" +
-                                            "</tr>");
+                                ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
+                                        "<td><h2><a href=\"mobileDetails.jsp?medID=" + m.getMedID() + "\">" + m.getGName() + " <span class=\"listAKA\">aka</span> " + m.getBName() + "</a></h2></td>" +
+                                        "<td><h2>" + m.getCond1() + "</h2>");
+                                if(m.getCond2() != null) out.print("<h2>" + m.getCond2() + "</h2>");
+                                if(m.getCond3() != null) out.print("<h2>" + m.getCond3() + "</h2>");
+                                out.print("</td></tr>");
                         }
 
                     } else {

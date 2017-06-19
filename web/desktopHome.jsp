@@ -59,12 +59,14 @@
                     for(Medications m : medications) {
                         /* Print blood thinners in red */
                         out.print(
-                                /* CSS not working - using style instead */
-                                ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
-                                "<td><h2><a href=\"desktopDetails.jsp\" title=\"" + m.getGName() + "\">" + m.getGName() + "</a></h2></td>" +
-                                "<td><h2><a href=\"desktopDetails.jsp\" title=\"" + m.getBName() + "\">" + m.getBName() + "</a></h2></td>" +
-                                "<td><h2>" + m.getCond1() + "</h2></td>" +
-                                "</tr>");
+                            /* CSS not working - using style instead */
+                            ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
+                            "<td><h2><a href=\"desktopDetails.jsp?medID=" + m.getMedID() + "\" title=\"" + m.getGName() + "\">" + m.getGName() + "</a></h2></td>" +
+                            "<td><h2><a href=\"desktopDetails.jsp?medID=" + m.getMedID() + "\" title=\"" + m.getBName() + "\">" + m.getBName() + "</a></h2></td>" +
+                            "<td><h2>" + m.getCond1() + "</h2>");
+                        if(m.getCond2() != null) out.print("<h2>" + m.getCond2() + "</h2>");
+                        if(m.getCond3() != null) out.print("<h2>" + m.getCond3() + "</h2>");
+                        out.print("</td></tr>");
                     }
                 %>
                 </tbody>
