@@ -66,3 +66,5 @@ Modified mobileHome to send query string to mobileDetails
 Modified mobileDetails to display medication information
 Formated mobileDetails css
 
+v0.17 Distribution to AWS
+Uploaded to AWS for live test
