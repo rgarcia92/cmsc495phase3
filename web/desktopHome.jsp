@@ -5,9 +5,9 @@
 --%>
 
 <%@page import="com.cmsc495phase1.models.DataAccess"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.cmsc495phase1.models.Medications"%>
 <%@page import="java.time.LocalDate"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

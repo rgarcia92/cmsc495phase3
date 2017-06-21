@@ -33,38 +33,80 @@ import java.util.regex.Pattern;
  */
 public class DataAccess {
     /**
-     * Retrieve all medications
+     * (Overloaded)
+     * Retrieve all medications starting with the letters from the selected keypad group
      * @return An array of Medication objects
      */
     public static ArrayList<Medications> selectAllMedications() {
         ArrayList<Medications> allMedications = new ArrayList<>();
-        String sql = "SELECT * FROM MEDCOMP";
         try {
             Connection conn = Utilities.connectToDatabase("medications.db");
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            /* Set values here */
-            ResultSet rs = stmt.executeQuery();
-            // Loop through the result set twice
-            while (rs.next()) {
+            // Make two calls to the database instead of multiple nested calls
+            // Retrieve conditions
+            String conSQL = "SELECT MEDCON.MEDID, CONDITIONS.CONDITION FROM MEDCON INNER JOIN CONDITIONS ON CONDITIONS.CONID = MEDCON.CONID";
+            PreparedStatement stmt = conn.prepareStatement(conSQL);
+            ResultSet conRS = stmt.executeQuery();
+            // Need to create a list of conditions since you can't reset conRS; SQLite is ResultSet.TYPE_FORWARD_ONLY
+            ArrayList<ConList> conList = new ArrayList<>();
+            while (conRS.next()) {
+                conList.add(new ConList(conRS.getInt(1), conRS.getString(2)));
+            }
+            // Retrieve medications
+            String medSQL = "SELECT MEDID, GNAME, BNAME, BTFLAG FROM MEDICATIONS";
+            stmt = conn.prepareStatement(medSQL);
+            ResultSet medRS = stmt.executeQuery();
+            int lastIndex = 0;
+            // Need to create a list of medications since you can't reset medRS; SQLite is ResultSet.TYPE_FORWARD_ONLY
+            ArrayList<Medications> medList = new ArrayList<>();
+            // Loop through the result set
+            while (medRS.next()) {
+                String[] conTemp = new String[3]; 
+                int conCount = 0;
+                // lastIndex starts the condition loop at the last condition read to avoid going through the full arraylist
+                for (int i = lastIndex; i < conList.size(); i++) {
+                    if (conList.get(i).getMedID() == medRS.getInt("MEDID")) {
+                        // Add condition to temorary array
+                        conTemp[conCount] = conList.get(i).getCondition();
+                        conCount++;
+                    } else if (conList.get(i).getMedID() > medRS.getInt("MEDID")) {
+                        lastIndex = i;
+                        // Stop the iteration to make app faster
+                        break;
+                    }
+                }
+                // Put it all together
+                medList.add(new Medications(
+                    medRS.getInt("MEDID"),
+                    medRS.getString("GNAME"),
+                    medRS.getString("BNAME"),
+                    conTemp[0],
+                    conTemp[1],
+                    conTemp[2],
+                    medRS.getInt("BTFLAG")
+                ));
+            }
+            // Loop through the result set twice based on regex
+            // Add by generic name in the first loop...
+            for (Medications m : medList) {
                 // Add by generic name in the first loop...
                 allMedications.add(new Medications(
-                        rs.getInt("MEDID"),
-                        rs.getString("GNAME") + " (G)",
-                        rs.getString("BNAME") + " (B)",
-                        rs.getString("COND1"),
-                        rs.getString("COND2"),
-                        rs.getString("COND3"),
-                        rs.getInt("BTFLAG")
+                        m.getMedID(),
+                        m.getGName() + " (G)",
+                        m.getBName() + " (B)",
+                        m.getCond1(),
+                        m.getCond2(),
+                        m.getCond3(),
+                        m.getBTFlag()
                 ));
                 // Add by brand name in the second loop...
                 allMedications.add(new Medications(
-                        rs.getInt("MEDID"),
-                        rs.getString("BNAME") + " (B)",
-                        rs.getString("GNAME") + " (G)",
-                        rs.getString("COND1"),
-                        rs.getString("COND2"),
-                        rs.getString("COND3"),
-                        rs.getInt("BTFLAG")
+                        m.getMedID(),
+                        m.getBName() + " (B)",
+                        m.getGName() + " (G)",
+                        m.getCond1(),
+                        m.getCond2(),
+                        m.getCond3(),
+                        m.getBTFlag()
                 ));
             }
             // Sorting
@@ -84,40 +126,79 @@ public class DataAccess {
      */
     public static ArrayList<Medications> selectAllMedications(int keypadLetterGroup) {
         ArrayList<Medications> allMedications = new ArrayList<>();
-        String sql = "SELECT * FROM MEDCOMP";
         try {
             /* Get regex pattern to select medications */
             Pattern pattern = Pattern.compile(Utilities.getPattern(keypadLetterGroup));
-
             Connection conn = Utilities.connectToDatabase("medications.db");
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            /* Set values here */
-            ResultSet rs = stmt.executeQuery();
+            // Make two calls to the database instead of multiple nested calls
+            // Retrieve conditions
+            String conSQL = "SELECT MEDCON.MEDID, CONDITIONS.CONDITION FROM MEDCON INNER JOIN CONDITIONS ON CONDITIONS.CONID = MEDCON.CONID";
+            PreparedStatement stmt = conn.prepareStatement(conSQL);
+            ResultSet conRS = stmt.executeQuery();
+            // Need to create a list of conditions since you can't reset conRS; SQLite is ResultSet.TYPE_FORWARD_ONLY
+            ArrayList<ConList> conList = new ArrayList<>();
+            while (conRS.next()) {
+                conList.add(new ConList(conRS.getInt(1), conRS.getString(2)));
+            }
+            // Retrieve medications
+            String medSQL = "SELECT MEDID, GNAME, BNAME, BTFLAG FROM MEDICATIONS";
+            stmt = conn.prepareStatement(medSQL);
+            ResultSet medRS = stmt.executeQuery();
+            int lastIndex = 0;
+            // Need to create a list of medications since you can't reset medRS; SQLite is ResultSet.TYPE_FORWARD_ONLY
+            ArrayList<Medications> medList = new ArrayList<>();
+            // Loop through the result set
+            while (medRS.next()) {
+                String[] conTemp = new String[3]; 
+                int conCount = 0;
+                // lastIndex starts the condition loop at the last condition read to avoid going through the full arraylist
+                for (int i = lastIndex; i < conList.size(); i++) {
+                    if (conList.get(i).getMedID() == medRS.getInt("MEDID")) {
+                        // Add condition to temorary array
+                        conTemp[conCount] = conList.get(i).getCondition();
+                        conCount++;
+                    } else if (conList.get(i).getMedID() > medRS.getInt("MEDID")) {
+                        lastIndex = i;
+                        // Stop the iteration to make app faster
+                        break;
+                    }
+                }
+                // Put it all together
+                medList.add(new Medications(
+                    medRS.getInt("MEDID"),
+                    medRS.getString("GNAME"),
+                    medRS.getString("BNAME"),
+                    conTemp[0],
+                    conTemp[1],
+                    conTemp[2],
+                    medRS.getInt("BTFLAG")
+                ));
+            }
             // Loop through the result set twice based on regex
             // Add by generic name in the first loop...
-            while (rs.next()) {
-                Matcher gMatcher = pattern.matcher(rs.getString("GNAME"));
-                Matcher bMatcher = pattern.matcher(rs.getString("BNAME"));
+            for (Medications m : medList) {
+                Matcher gMatcher = pattern.matcher(m.getGName());
+                Matcher bMatcher = pattern.matcher(m.getBName());
                 if (gMatcher.find()) {
                     allMedications.add(new Medications(
-                            rs.getInt("MEDID"),
-                            rs.getString("GNAME") + " (G)",
-                            rs.getString("BNAME") + " (B)",
-                            rs.getString("COND1"),
-                            rs.getString("COND2"),
-                            rs.getString("COND3"),
-                            rs.getInt("BTFLAG")
+                            m.getMedID(),
+                            m.getGName() + " (G)",
+                            m.getBName() + " (B)",
+                            m.getCond1(),
+                            m.getCond2(),
+                            m.getCond3(),
+                            m.getBTFlag()
                     ));
                 }
                 if (bMatcher.find()) {
                     allMedications.add(new Medications(
-                            rs.getInt("MEDID"),
-                            rs.getString("BNAME") + " (B)",
-                            rs.getString("GNAME") + " (G)",
-                            rs.getString("COND1"),
-                            rs.getString("COND2"),
-                            rs.getString("COND3"),
-                            rs.getInt("BTFLAG")
+                            m.getMedID(),
+                            m.getBName() + " (B)",
+                            m.getGName() + " (G)",
+                            m.getCond1(),
+                            m.getCond2(),
+                            m.getCond3(),
+                            m.getBTFlag()
                     ));
                 }
             }
@@ -131,28 +212,55 @@ public class DataAccess {
     }
     
     /**
-     * Retrieve all medications
+     * Retrieve all medications by generic name
      * @return An array of Medication objects
      */
     public static ArrayList<Medications> selectMedicationsByGenericName() {
         ArrayList<Medications> allMedications = new ArrayList<>();
-        String sql = "SELECT * FROM MEDCOMP";
         try {
             Connection conn = Utilities.connectToDatabase("medications.db");
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            /* Set values here */
-            ResultSet rs = stmt.executeQuery();
-            // Loop through the result set twice
-            // Add by generic name in the first loop...
-            while (rs.next()) {
+            // Make two calls to the database instead of multiple nested calls
+            // Retrieve conditions
+            String conSQL = "SELECT MEDCON.MEDID, CONDITIONS.CONDITION FROM MEDCON INNER JOIN CONDITIONS ON CONDITIONS.CONID = MEDCON.CONID";
+            PreparedStatement stmt = conn.prepareStatement(conSQL);
+            ResultSet conRS = stmt.executeQuery();
+            // Need to create a list of conditions since you can't reset conRS; SQLite is ResultSet.TYPE_FORWARD_ONLY
+            ArrayList<ConList> conList = new ArrayList<>();
+            while (conRS.next()) {
+                conList.add(new ConList(conRS.getInt(1), conRS.getString(2)));
+            }
+            // IMPORTANT - Sort by medID or SPEED UP won't work
+            conList.sort(Comparator.comparing(con -> con.medID));
+            int lastIndex = 0;
+            // Retrieve medications
+            String medSQL = "SELECT MEDID, GNAME, BNAME, BTFLAG FROM MEDICATIONS";
+            stmt = conn.prepareStatement(medSQL);
+            ResultSet medRS = stmt.executeQuery();
+            // Loop through the result set
+            while (medRS.next()) {
+                String[] conTemp = new String[3]; 
+                int conCount = 0;
+                // SPEEDUP - lastIndex starts the condition loop at the last condition read to avoid going through the full arraylist
+                for (int i = lastIndex; i < conList.size(); i++) {
+                    if (conList.get(i).getMedID() == medRS.getInt("MEDID")) {
+                        // Add condition to temorary array
+                        conTemp[conCount] = conList.get(i).getCondition();
+                        conCount++;
+                    } else if (conList.get(i).getMedID() > medRS.getInt("MEDID")) {
+                        lastIndex = i;
+                        // SPEEDUP - Stop the iteration to make app faster
+                        break;
+                    }
+                }
+                // Put it all together
                 allMedications.add(new Medications(
-                        rs.getInt("MEDID"),
-                        rs.getString("GNAME") + " (G)",
-                        rs.getString("BNAME") + " (B)",
-                        rs.getString("COND1"),
-                        rs.getString("COND2"),
-                        rs.getString("COND3"),
-                        rs.getInt("BTFLAG")
+                    medRS.getInt("MEDID"),
+                    medRS.getString("GNAME") + " (G)",
+                    medRS.getString("BNAME") + " (B)",
+                    conTemp[0],
+                    conTemp[1],
+                    conTemp[2],
+                    medRS.getInt("BTFLAG")
                 ));
             }
             // Sorting
@@ -164,7 +272,43 @@ public class DataAccess {
         return allMedications;
     }
     
-    public static Medications getMedicationDetails(int medID) {
+    /*
+    * Conlist Object
+    */
+    public static class ConList {
+        private int medID;
+        private String condition;
+        
+        /**
+         * Constructor
+         * Used to create a conList object
+         * @param medID     the unique medication identifier from the junction table
+         * @param condition the associated condition for the medication
+         */
+        public ConList(int medID, String condition) {
+            this.medID = medID;
+            this.condition = condition;
+        }
+        
+        /* Getter functions */
+        public int getMedID() {
+            return medID;
+        }
+
+        public String getCondition() {
+            return condition;
+        }
+            /* Setter functions */
+        public void setMedID(int medID) {
+            this.medID = medID;
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
+    }
+    
+    public static Medications selectMedicationDetails(int medID) {
         Medications medication = new Medications();
         String sql = "SELECT * FROM MEDCOMP WHERE MEDID = " + medID;
         try {
@@ -189,5 +333,81 @@ public class DataAccess {
         }
         /* Return results */
         return medication;        
+    }
+    
+    /**
+     * (Overloaded)
+     * Retrieve all conditions starting with the letters from the selected keypad group
+     * @param keypadLetterGroup the letters associated with the key from the keypad
+     * @return An array of Condition objects
+     */
+    public static ArrayList<Conditions> selectAllConditions(int keypadLetterGroup) {
+        ArrayList<Conditions> allConditionss = new ArrayList<>();
+        try {
+            /* Get regex pattern to select medications */
+            Pattern pattern = Pattern.compile(Utilities.getPattern(keypadLetterGroup));
+            Connection conn = Utilities.connectToDatabase("medications.db");
+            String sql = "SELECT * FROM CONDITIONS";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Matcher bMatcher = pattern.matcher(rs.getString("condition"));
+                if (bMatcher.find()) {
+                    allConditionss.add(new Conditions(
+                            rs.getInt("conID"),
+                            rs.getString("condition"),
+                            rs.getString("description")
+                    ));
+                }
+            }
+            // Sorting
+            allConditionss.sort(Comparator.comparing(con -> con.condition));
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* Return results */
+        return allConditionss;
+    }
+    
+    public static Conditions selectConditionDetails(int conID) {
+        Conditions condition = new Conditions();
+        String sql = "SELECT * FROM CONDITIONS WHERE CONID = " + conID;
+        try {
+            Connection conn = Utilities.connectToDatabase("medications.db");
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            /* Set values here */
+            ResultSet rs = stmt.executeQuery();
+                condition.setConID(rs.getInt("CONID"));
+                condition.setCondition(rs.getString("CONDITION"));
+                condition.setDescription(rs.getString("DESCRIPTION"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* Return results */
+        return condition;        
+    }
+    
+    public static ArrayList<Medications> selectMedicationsinCondition(int conID) {
+        ArrayList<Medications> medications = new ArrayList<>();
+        String sql = "SELECT MEDICATIONS.MEDID, MEDICATIONS.GNAME, MEDICATIONS.BNAME FROM MEDCON INNER JOIN MEDICATIONS ON MEDICATIONS.MEDID = MEDCON.MEDID WHERE MEDCON.CONID = " + conID;
+        try {
+            Connection conn = Utilities.connectToDatabase("medications.db");
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            /* Set values here */
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Medications m = new Medications();
+                m.setMedID(rs.getInt("MEDID"));
+                m.setGName(rs.getString("GNAME"));
+                m.setBName(rs.getString("BNAME"));
+                medications.add(m);
+            }
+            // Sorting
+            medications.sort(Comparator.comparing(med -> med.gName));
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* Return results */
+        return medications;   
     }
 }

@@ -4,6 +4,7 @@
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
+<%@page import="com.cmsc495phase1.models.Conditions"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.cmsc495phase1.models.Medications"%>
 <%@page import="com.cmsc495phase1.models.DataAccess"%>
@@ -29,22 +30,25 @@
                         /* Get data from model and display on page */
                         /* Remove flag value */
                         ArrayList<Medications> medications = DataAccess.selectAllMedications(Integer.parseInt(keypadLetterGroup) - 10);
-                        for(Medications m : medications) {
+                        for (Medications m : medications) {
                         /* Print blood thinners in red */
                             out.print(
                                 /* CSS not working - using style instead */
                                 ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
-                                        "<td><h2><a href=\"mobileDetails.jsp?medID=" + m.getMedID() + "\">" + m.getGName() + " <span class=\"listAKA\">aka</span> " + m.getBName() + "</a></h2></td>" +
+                                        "<td><h2><a href=\"mobileMedDetails.jsp?medID=" + m.getMedID() + "\">" + m.getGName() + " <span class=\"listAKA\">aka</span> " + m.getBName() + "</a></h2></td>" +
                                         "<td><h2>" + m.getCond1() + "</h2>");
                                 if(m.getCond2() != null) out.print("<h2>" + m.getCond2() + "</h2>");
                                 if(m.getCond3() != null) out.print("<h2>" + m.getCond3() + "</h2>");
                                 out.print("</td></tr>");
                         }
-
                     } else {
-                        out.println("<h1>In Development</h1>");
-                        out.println("<img src=\"under-construction.png\" alt=\"In Development\"/>");
-
+                        out.println("<tr class=\"listTitleRow\"><td><h2>CONDITION:</h2></td></tr>");
+                        /* Get data from model and display on page */
+                        /* Remove flag value */
+                        ArrayList<Conditions> conditions = DataAccess.selectAllConditions(Integer.parseInt(keypadLetterGroup) - 20);
+                        for (Conditions c : conditions) {
+                            out.print("<tr><td><h2><a href=\"mobileConDetails.jsp?conID=" + c.getConID() + "\">" + c.getCondition() + "</a></h2></td></tr>");
+                        }
                     }
                 %>
             </table>

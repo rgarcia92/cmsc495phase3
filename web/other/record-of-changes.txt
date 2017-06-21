@@ -58,7 +58,7 @@ v0.16 Populated medication detail pages
 Modified medications.db by adding additional conditions, action, DEA Schedule, side effects, interactions, warnings
 Modified Medications class by adding new elements and overloading the constructor
 Modified DataAccess class to use MEDCOMP table in medications.db
-Added getMedicationDetails method to DataAccess class
+Added selectMedicationDetails method to DataAccess class
 Modified desktopHome to send query string to desktopDetails
 Modified desktopDetails to display medication information
 Formated desktopDetails css
@@ -68,3 +68,14 @@ Formated mobileDetails css
 
 v0.17 Distribution to AWS
 Uploaded to AWS for live test
+
+v0.18 Switch to normalized SQL tables and added Lookup By Condition functionality
+Added ConList class to DataAccess
+Rewrote DataAccess methods to use normalized MEDICATIONS, CONDITIONS, and MEDCON junction tables
+Created Conditions class
+Renamed mobileDetails.jsp to mobileMedDetails.jsp
+Created mobileConDetails.jsp
+Renamed getMedicationDetails method to selectMedicationDetails
+Added selectConditionDetails and selectMedicationsinCondition methods to DataAccess
+Edited phase1-sql.sql
+Minor presentation and css changes

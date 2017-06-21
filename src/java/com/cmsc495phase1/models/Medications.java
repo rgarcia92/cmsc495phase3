@@ -80,7 +80,7 @@ public class Medications {
      *
      * @param medID        the unique medication identifier in the database
      * @param gName        the medication generic name
-     * @param bName        the medication generic name
+     * @param bName        the medication brand name
      * @param cond1        the primary condition the medication treats
      * @param cond2        the secondary condition the medication treats
      * @param cond3        the tertiary condition the medication treats
@@ -95,7 +95,6 @@ public class Medications {
         this.cond3 = cond3;
         this.btFlag = btFlag;
     }
-    
     
     /* Getter functions */
     public int getMedID() {
