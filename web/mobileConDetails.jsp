@@ -26,7 +26,7 @@
         <%
             /* Get data from model and display on page */
             Conditions c = DataAccess.selectConditionDetails(Integer.parseInt(request.getParameter("conID")));
-            ArrayList<Medications> medications = DataAccess.selectMedicationsinCondition(Integer.parseInt(request.getParameter("conID")));
+            ArrayList<Medications> medications = DataAccess.selectMedicationsInCondition(Integer.parseInt(request.getParameter("conID")));
         %>
         <table class="list">
             <tr><td class="detailsTD"><h2>Condition:</h2></td></tr>

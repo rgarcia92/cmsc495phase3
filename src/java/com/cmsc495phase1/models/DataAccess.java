@@ -33,8 +33,7 @@ import java.util.regex.Pattern;
  */
 public class DataAccess {
     /**
-     * (Overloaded)
-     * Retrieve all medications starting with the letters from the selected keypad group
+     * Basic method to retrieve all medications in the database
      * @return An array of Medication objects
      */
     public static ArrayList<Medications> selectAllMedications() {
@@ -119,8 +118,7 @@ public class DataAccess {
     }
     
     /**
-     * (Overloaded)
-     * Retrieve all medications starting with the letters from the selected keypad group
+     * An overloaded method to retrieve all medications starting with the letters from the selected keypad group
      * @param keypadLetterGroup the letters associated with the key from the keypad
      * @return An array of Medication objects
      */
@@ -212,7 +210,7 @@ public class DataAccess {
     }
     
     /**
-     * Retrieve all medications by generic name
+     * Method to retrieve all medications by generic name
      * @return An array of Medication objects
      */
     public static ArrayList<Medications> selectMedicationsByGenericName() {
@@ -272,42 +270,11 @@ public class DataAccess {
         return allMedications;
     }
     
-    /*
-    * Conlist Object
-    */
-    public static class ConList {
-        private int medID;
-        private String condition;
-        
-        /**
-         * Constructor
-         * Used to create a conList object
-         * @param medID     the unique medication identifier from the junction table
-         * @param condition the associated condition for the medication
-         */
-        public ConList(int medID, String condition) {
-            this.medID = medID;
-            this.condition = condition;
-        }
-        
-        /* Getter functions */
-        public int getMedID() {
-            return medID;
-        }
-
-        public String getCondition() {
-            return condition;
-        }
-            /* Setter functions */
-        public void setMedID(int medID) {
-            this.medID = medID;
-        }
-
-        public void setCondition(String condition) {
-            this.condition = condition;
-        }
-    }
-    
+    /**
+     * Method to retrieve medication details
+     * @param medID the unique ID for medication in the database
+     * @return A Medications object
+     */
     public static Medications selectMedicationDetails(int medID) {
         Medications medication = new Medications();
         String sql = "SELECT * FROM MEDCOMP WHERE MEDID = " + medID;
@@ -334,10 +301,36 @@ public class DataAccess {
         /* Return results */
         return medication;        
     }
+
+    /**
+     * A method to retrieve all conditions in the database
+     * @return An array of Condition objects
+     */
+    public static ArrayList<Conditions> selectAllConditions() {
+        ArrayList<Conditions> allConditionss = new ArrayList<>();
+        try {
+            Connection conn = Utilities.connectToDatabase("medications.db");
+            String sql = "SELECT * FROM CONDITIONS";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                allConditionss.add(new Conditions(
+                        rs.getInt("conID"),
+                        rs.getString("condition"),
+                        rs.getString("description")
+                ));
+            }
+            // Sorting
+            allConditionss.sort(Comparator.comparing(con -> con.condition));
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* Return results */
+        return allConditionss;
+    }
     
     /**
-     * (Overloaded)
-     * Retrieve all conditions starting with the letters from the selected keypad group
+     * An overloaded method to retrieve all conditions starting with the letters from the selected keypad group
      * @param keypadLetterGroup the letters associated with the key from the keypad
      * @return An array of Condition objects
      */
@@ -369,6 +362,11 @@ public class DataAccess {
         return allConditionss;
     }
     
+    /**
+     * Method to retrieve condition details
+     * @param conID the unique ID for condition in the database
+     * @return A Conditions object
+     */
     public static Conditions selectConditionDetails(int conID) {
         Conditions condition = new Conditions();
         String sql = "SELECT * FROM CONDITIONS WHERE CONID = " + conID;
@@ -387,7 +385,12 @@ public class DataAccess {
         return condition;        
     }
     
-    public static ArrayList<Medications> selectMedicationsinCondition(int conID) {
+    /**
+     * Method to retrieve all medications associated with a condition
+     * @param conID the unique ID for condition in the database
+     * @return An array of Conditions objects
+     */
+    public static ArrayList<Medications> selectMedicationsInCondition(int conID) {
         ArrayList<Medications> medications = new ArrayList<>();
         String sql = "SELECT MEDICATIONS.MEDID, MEDICATIONS.GNAME, MEDICATIONS.BNAME FROM MEDCON INNER JOIN MEDICATIONS ON MEDICATIONS.MEDID = MEDCON.MEDID WHERE MEDCON.CONID = " + conID;
         try {
@@ -409,5 +412,41 @@ public class DataAccess {
         }
         /* Return results */
         return medications;   
+    }
+    
+    /**
+     * Conlist Utility Object for use by DataAccess methods
+     */
+    public static class ConList {
+        private int medID;
+        private String condition;
+        
+        /**
+         * Constructor used to create a conList object
+         * @param medID     the unique medication identifier from the junction table
+         * @param condition the associated condition for the medication
+         */
+        public ConList(int medID, String condition) {
+            this.medID = medID;
+            this.condition = condition;
+        }
+        
+        /* Getter functions */
+        public int getMedID() {
+            return medID;
+        }
+
+        public String getCondition() {
+            return condition;
+        }
+        
+        /* Setter functions */
+        public void setMedID(int medID) {
+            this.medID = medID;
+        }
+
+        public void setCondition(String condition) {
+            this.condition = condition;
+        }
     }
 }

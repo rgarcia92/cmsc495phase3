@@ -76,6 +76,11 @@ Created Conditions class
 Renamed mobileDetails.jsp to mobileMedDetails.jsp
 Created mobileConDetails.jsp
 Renamed getMedicationDetails method to selectMedicationDetails
-Added selectConditionDetails and selectMedicationsinCondition methods to DataAccess
+Added selectConditionDetails and selectMedicationsInCondition methods to DataAccess
 Edited phase1-sql.sql
 Minor presentation and css changes
+
+v0.19 Javadoc updates
+Renamed selectMedicationsinCondition to selectMedicationsInCondition
+Fixed comments and updated Javadoc
+Fixed Copyright template in desktop views

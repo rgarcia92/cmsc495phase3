@@ -26,17 +26,14 @@ public class Conditions {
     private String description;
 
     /**
-     * (Basic Constructor)
-     * Used to create a Medications object
+     * Basic constructor used to create a Conditions object
      */
     public Conditions() {
         /* Used to initialize object. See overloaded functions */
     }
     
     /**
-     * Constructor
-     * Used to create a condition object
-     *
+     * Overloaded constructor used to create a Conditions object
      * @param conID        the unique condition identifier in the database
      * @param condition    the condition name
      * @param description  the condition description

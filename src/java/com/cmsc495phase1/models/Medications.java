@@ -35,16 +35,14 @@ public class Medications {
     private String warnings;
 
     /**
-     * (Basic Constructor)
-     * Used to create a Medications object
+     * Basic constructor used to create a Medications object
      */
     public Medications() {
         /* Used to initialize object. See overloaded functions */
     }
     
     /**
-     * (Overloaded Constructor)
-     * Used to create a Medications object
+     * Overloaded constructor used to create a Medications object
      *
      * @param medID        the unique medication identifier in the database
      * @param gName        the medication generic name
@@ -75,8 +73,7 @@ public class Medications {
     }
 
     /**
-     * (Overloaded Constructor)
-     * Used to create a Medications object
+     * Overloaded constructor used to create a Medications object
      *
      * @param medID        the unique medication identifier in the database
      * @param gName        the medication generic name

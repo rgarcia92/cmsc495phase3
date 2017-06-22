@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Utilities {
     /**
-     * Check if the browser is on a mobile device
+     * Method to check if the browser is on a mobile device
      * @param request the request from the client
-     * @return if true or false
+     * @return True if a mobile device, false if not
      */  
     public static Boolean isMobile(HttpServletRequest request) {
         /* Check for mobile browser */
@@ -40,9 +40,9 @@ public class Utilities {
     }
 
     /**
-     * Retrieve the appropriate regex pattern based on key selected
+     * Method to retrieve the appropriate regex pattern based on key selected
      * @param keypadLetterGroup the key number from the key selected
-     * @return regex string
+     * @return The appropriate regex as a string
      */      
     public static String getPattern(int keypadLetterGroup) {
         String pattern;
@@ -85,9 +85,9 @@ public class Utilities {
     }
 
     /**
-     * Connect to the SQLite database
+     * Method used to connect to the SQLite database
      * @param dbName the name of the SQLite database to open
-     * @return the Connection object
+     * @return The Connection object
      */    
     public static Connection connectToDatabase(String dbName) {
         Connection conn = null;

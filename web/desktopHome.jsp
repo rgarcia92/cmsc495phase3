@@ -75,7 +75,7 @@
         <footer>
             <hr>
             <p>CMSC 495 6380 Current Trends and Projects in Computer Science (2175) Project</p>
-            <p>Copyright &copy; <% out.println((LocalDate.now().getYear() == 2017) ? "2017" : "2017 - " + String.valueOf(LocalDate.now().getYear())); %> Robert Garcia - All Rights Reserved</p>
+            <p>Copyright &copy; <% out.println((LocalDate.now().getYear() == 2017) ? "2017" : "2017 - " + String.valueOf(LocalDate.now().getYear())); %> - All Rights Reserved</p>
         </footer>
     </body>
 </html>
