@@ -4,11 +4,10 @@
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.cmsc495phase1.models.Medications"%>
-<%@page import="com.cmsc495phase1.models.Conditions"%>
-<%@page import="com.cmsc495phase1.models.DataAccess"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,39 +16,47 @@
         <link href="${pageContext.request.contextPath}/css/mobileStyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-    <header>
-        <h1>CMSC 495 Electronic Medical Reference Project</h1>
-    </header>
-    <main>
-    <h1>Condition Details Page</h1>
-    <div>
-        <%
-            /* Get data from model and display on page */
-            Conditions c = DataAccess.selectConditionDetails(Integer.parseInt(request.getParameter("conID")));
-            ArrayList<Medications> medications = DataAccess.selectMedicationsInCondition(Integer.parseInt(request.getParameter("conID")));
-        %>
-        <table class="list">
-            <tr><td class="detailsTD"><h2>Condition:</h2></td></tr>
-            <tr><td><h2><%= c.getCondition() %></h2></td></tr>
-            <tr><td class="detailsTD"><h2>Description:</h2></td></tr>
-            <tr><td><h2><%= c.getDescription() %></h2></td></tr>
-            <tr><td class="detailsTD"><h2>Medications:</h2></td></tr>
-            <%
-                for (Medications m : medications) {
-                    out.println("<tr><td><h2><a href=\"mobileMedDetails.jsp?medID=" + m.getMedID() + "\">" + m.getGName() + " <span class=\"listAKA\">aka</span> " + m.getBName() + "</a></h2></td><tr>");
+        <!-- Redirect if mobile -->
+        <c:set var="browser" value="${header['User-Agent']}" scope="session" />
+        <c:if test = "${!fn:containsIgnoreCase(browser, 'mobi')}">
+            <c:redirect url="/desktopHome.jsp"/>
+        </c:if>
+        <header>
+            <h1>CMSC 495 Electronic Medical Reference Project</h1>
+        </header>
+        <main>
+            <h1>Condition Details Page</h1>
+            <!-- Get data from model and display on page -->
+            <jsp:useBean id="dataAccess" class="com.cmsc495phase2.models.DataAccess">
+                <jsp:setProperty name="dataAccess" property="*" />
+            </jsp:useBean>
+            <c:set var="c" value='${dataAccess.selectConditionDetails(param.conID)}' />
+            <c:set var="meds" value='${dataAccess.selectMedicationsInCondition(param.conID)}' />
+            <table class="list">
+                <tr><td class="detailsTD"><h2>Condition:</h2></td></tr>
+                <tr><td><h2>${c.condition}</h2></td></tr>
+                <tr><td class="detailsTD"><h2>Description:</h2></td></tr>
+                <tr><td><h2>${c.description}</h2></td></tr>
+                <tr><td class="detailsTD"><h2>Medications:</h2></td></tr>
+                <tr><td>
+                    <c:forEach items="${meds}" var="m">
+                        <tr>
+                            <td><h2><a href="mobileMedDetails.jsp?medID=${m.medID}" title="${m.GName}">
+                                ${m.GName}<span class="listAKA"> aka </span>${m.BName}
+                            </a></h2></td>
+                        </tr>
+                    </c:forEach>
+                </td></tr>
+            </table>
+        </main>
+        <footer class="backFooter">
+            <button class="backButton" onclick="goBack()">Go Back</button>
+            <script>
+                /* Use history function instead of a redirect */
+                function goBack() {
+                    window.history.back();
                 }
-            %>
-        </table>
-    </div>
-    </main>
-    <footer class="backFooter">
-        <button class="backButton" onclick="goBack()">Go Back</button>
-        <script>
-            /* Use history function instead of a redirect */
-            function goBack() {
-                window.history.back();
-            }
-        </script>
-    </footer>
+            </script>
+        </footer>
     </body>
 </html>

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase1.models;
+package com.cmsc495phase2.models;
 
 /**
  *
  * @author Rob Garcia at rgarcia92.student.umuc.edu
  */
-public class Conditions {
+public final class Conditions {
     private int conID;
     String condition; /* Package-private: Used for sorting in DataAccess */
     private String description;

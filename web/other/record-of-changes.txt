@@ -84,3 +84,13 @@ v0.19 Javadoc updates
 Renamed selectMedicationsinCondition to selectMedicationsInCondition
 Fixed comments and updated Javadoc
 Fixed Copyright template in desktop views
+
+v0.20 Fixed issues found during testing
+Fixed selectMedicationDetails method to use MEDICATIONS table
+Added jstl-1.2.jar to Libraries
+Replaced all scriplets with JSTL
+Fixed issues identified by Visual Code Grepper
+Fixed issues identified by OWASP ZAP
+Added error page and 404 page
+Ensured all ResultSets, PreparedStatements, and Connections are closed
+Added mobile vs desktop check to each view

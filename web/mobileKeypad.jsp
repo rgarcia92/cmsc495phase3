@@ -4,7 +4,10 @@
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,14 +16,14 @@
         <link href="${pageContext.request.contextPath}/css/mobileStyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <!-- Redirect if mobile -->
+        <c:set var="browser" value="${header['User-Agent']}" scope="session" />
+        <c:if test = "${!fn:containsIgnoreCase(browser, 'mobi')}">
+            <c:redirect url="/desktopHome.jsp"/>
+        </c:if>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
-            <%
-                /* Set base flag for medications as 10 and for conditions as 20 */
-                int flag = Integer.parseInt(request.getParameter("button")) * 10;
-                out.println(flag == 10 ? "<h1>Medication Listing</h1>" : "<h1>Condition Listing</h1>");
-                ;
-            %>
+            <h2>${param.button == 1 ? "<h1>Medication Listing</h1>" : "<h1>Condition Listing</h1>"}</h2>
         </header>
         <main>
             <form action="${pageContext.request.contextPath}/mobileResults.jsp" method="post">
@@ -28,19 +31,19 @@
                     <tr>
                         <!-- h1 only renders properly with css -->
                         <!-- Add flag to key value -->
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 1 %>">A B C</button></td>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 2 %>">D E F</button></td>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 3 %>">G H I</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 1}">A B C</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 2}">D E F</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 3}">G H I</button></td>
                     </tr>
                     <tr>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 4 %>">J K L</button></td>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 5 %>">M N O</button></td>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 6 %>">P Q R</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 4}">J K L</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 5}">M N O</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 6}">P Q R</button></td>
                     </tr>
                     <tr>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 7 %>">S T U</button></td>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 8 %>">V W X</button></td>
-                        <td class="keys"><button type="submit" name="button" value="<%= flag + 9 %>">Y Z</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 7}">S T U</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 8}">V W X</button></td>
+                        <td class="keys"><button type="submit" name="button" value="${(param.button * 10) + 9}">Y Z</button></td>
                     </tr>
                 </table>
             </form>

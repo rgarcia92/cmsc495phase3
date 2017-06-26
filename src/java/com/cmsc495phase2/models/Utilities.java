@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase1.models;
+package com.cmsc495phase2.models;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -28,14 +28,14 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Rob Garcia at rgarcia92.student.umuc.edu
  */
-public class Utilities {
+public final class Utilities {
     /**
      * Method to check if the browser is on a mobile device
      * @param request the request from the client
      * @return True if a mobile device, false if not
      */  
     public static Boolean isMobile(HttpServletRequest request) {
-        /* Check for mobile browser */
+        // Check for mobile browser
         return request.getHeader("User-Agent").toLowerCase().contains("mobi");
     }
 
@@ -46,7 +46,7 @@ public class Utilities {
      */      
     public static String getPattern(int keypadLetterGroup) {
         String pattern;
-        /* Select regex pattern based on key selected */
+        // Select regex pattern based on key selected
         switch (keypadLetterGroup) {
             case 1:
                 pattern = "^[A-Ca-c]";
@@ -77,7 +77,7 @@ public class Utilities {
                 break;
             case 0:
             default:
-                /* Select all data */
+                // Select all data
                 pattern = "^[A-Za-z]";
                 break;
         }
@@ -93,7 +93,7 @@ public class Utilities {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            /* Look for database in the com.cmsc495ems.models package */
+            // Look for database in the com.cmsc495ems.models package
             URL url = Utilities.class.getResource(dbName);
             conn = DriverManager.getConnection("jdbc:sqlite::resource:" + url);
         } catch ( ClassNotFoundException | SQLException ex ) {

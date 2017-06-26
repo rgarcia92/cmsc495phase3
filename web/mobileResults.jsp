@@ -4,11 +4,10 @@
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
-<%@page import="com.cmsc495phase1.models.Conditions"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.cmsc495phase1.models.Medications"%>
-<%@page import="com.cmsc495phase1.models.DataAccess"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,40 +16,61 @@
         <link href="${pageContext.request.contextPath}/css/mobileStyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <!-- Redirect if mobile -->
+        <c:set var="browser" value="${header['User-Agent']}" scope="session" />
+        <c:if test = "${!fn:containsIgnoreCase(browser, 'mobi')}">
+            <c:redirect url="/desktopHome.jsp"/>
+        </c:if>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
         </header>
         <main>
+            <!-- Get data from model and display on page -->
+            <jsp:useBean id="dataAccess" class="com.cmsc495phase2.models.DataAccess">
+                <jsp:setProperty name="dataAccess" property="*" />
+            </jsp:useBean>
             <table class="list">
-                <%
-                    /* Retrieve POST parameter */
-                    String keypadLetterGroup = request.getParameter("button");
-                    if (Integer.parseInt(keypadLetterGroup) < 20) {
-                        out.println("<tr class=\"listTitleRow\"><td><h2>NAME:</h2></td><td><h2>CONDITION:</h2></td></tr>");
-                        /* Get data from model and display on page */
-                        /* Remove flag value */
-                        ArrayList<Medications> medications = DataAccess.selectAllMedications(Integer.parseInt(keypadLetterGroup) - 10);
-                        for (Medications m : medications) {
-                        /* Print blood thinners in red */
-                            out.print(
-                                /* CSS not working - using style instead */
-                                ((m.getBTFlag() == 1) ? "<tr style=\"background-color: red; color: white;\">" : "<tr>") +
-                                        "<td><h2><a href=\"mobileMedDetails.jsp?medID=" + m.getMedID() + "\">" + m.getGName() + " <span class=\"listAKA\">aka</span> " + m.getBName() + "</a></h2></td>" +
-                                        "<td><h2>" + m.getCond1() + "</h2>");
-                                if(m.getCond2() != null) out.print("<h2>" + m.getCond2() + "</h2>");
-                                if(m.getCond3() != null) out.print("<h2>" + m.getCond3() + "</h2>");
-                                out.print("</td></tr>");
-                        }
-                    } else {
-                        out.println("<tr class=\"listTitleRow\"><td><h2>CONDITION:</h2></td></tr>");
-                        /* Get data from model and display on page */
-                        /* Remove flag value */
-                        ArrayList<Conditions> conditions = DataAccess.selectAllConditions(Integer.parseInt(keypadLetterGroup) - 20);
-                        for (Conditions c : conditions) {
-                            out.print("<tr><td><h2><a href=\"mobileConDetails.jsp?conID=" + c.getConID() + "\">" + c.getCondition() + "</a></h2></td></tr>");
-                        }
-                    }
-                %>
+            <c:if test = "${param.button < 20}">
+                <c:set var="meds" value='${dataAccess.selectAllMedications(param.button - 10)}' />
+                <thead>
+                    <tr class="listTitleRow">
+                        <td><h2>NAME:</h2></td>
+                        <td><h2>CONDITION:</h2></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${meds}" var="m">
+                    <!-- Highlight blood thinners in red -->
+                    <tr style="${m.BTFlag == 1 ? 'background-color: red; color: white' : ''}">
+                        <td><h2><a href="mobileMedDetails.jsp?medID=${m.medID}" title="${m.GName}">
+                            ${m.GName}<span class="listAKA"> aka </span>${m.BName}
+                        </a></h2></td>
+                        <td>
+                            <h2>${m.cond1}</h2>
+                            <h2>${m.cond2 != null ? m.cond2 : ''}</h2>
+                            <h2>${m.cond3 != null ? m.cond3 : ''}</h2>
+                        </td>
+                    </tr>
+                    </c:forEach>
+                </tbody>
+            </c:if>
+            <c:if test = "${param.button >= 20}">
+                <c:set var="cons" value='${dataAccess.selectAllConditions(param.button - 20)}' />
+                <thead>
+                    <tr class="listTitleRow">
+                        <td><h2>CONDITION:</h2></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${cons}" var="cn">
+                        <tr>
+                            <td><h2><a href="mobileConDetails.jsp?conID=${cn.conID}" title="${cn.condition}">
+                                ${cn.condition}
+                            </a></h2></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </c:if>
             </table>
         </main>
         <footer class="backFooter">

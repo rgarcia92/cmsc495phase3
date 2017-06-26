@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase1.controllers;
+package com.cmsc495phase2.controllers;
 
-import com.cmsc495phase1.models.Utilities;
+import com.cmsc495phase2.models.Utilities;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Rob Garcia at rgarcia92.student.umuc.edu
  */
-public class index extends HttpServlet {
+public final class index extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +44,6 @@ public class index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
