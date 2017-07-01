@@ -34,7 +34,7 @@
             <jsp:useBean id="dataAccess" class="com.cmsc495phase2.models.DataAccess">
                 <jsp:setProperty name="dataAccess" property="*" />
             </jsp:useBean>
-            <c:set var="m" value='${dataAccess.selectMedicationDetails(param.medID)}' />
+            <c:set var="m" value="${dataAccess.selectMedicationDetails(param.medID)}" />
             <table class="list">
                 <tr><td class="detailsTD"><h2>Generic Name:</h2></td><td><h2>${m.GName}</h2></td></tr>
                 <tr><td class="detailsTD"><h2>Brand Name:</h2></td><td><h2>${m.BName}</h2></td></tr>
@@ -58,6 +58,7 @@
             <hr>
             <p>CMSC 495 6380 Current Trends and Projects in Computer Science (2175) Project</p>
             <p>Copyright &copy; <% out.println((LocalDate.now().getYear() == 2017) ? "2017" : "2017 - " + String.valueOf(LocalDate.now().getYear())); %> - All Rights Reserved</p>
+            <div class="loginKey"><a href="login.jsp" title="Login"><img src="login-key.png" alt="Login"/></a></div>
         </footer>
     </body>
 </html>

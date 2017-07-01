@@ -95,3 +95,6 @@ a {
 .split50 {
     width: 50%;
 }
+.errorText {
+    color: red;
+}

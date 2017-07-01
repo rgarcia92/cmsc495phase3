@@ -46,7 +46,7 @@
                 </td></tr>
                 <tr>
                     <td class="detailsTD split50"><h2>Blood Thinner:</h2></td>
-                    <td class="detailsTD split50"><h2>Controlled Substance:</h2></td>
+                    <td class="detailsTD split50"><h2>Controlled:</h2></td>
                 </tr>
                 <tr>
                     <td><h2 style="${m.BTFlag == 1 ? 'color: orangered' : ''}">${m.BTFlag == 1 ? "Yes" : "No"}</h2></td>

@@ -69,9 +69,12 @@ public final class index extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        /* Check for mobile browser */
+        // Start log
+        Utilities u = new Utilities();
+        u.logEvent(String.format("System Accessed by %s", request.getRemoteAddr()));
+        // Check for mobile browser
         session.setAttribute("isMobile", Utilities.isMobile(request));
-        /* Redirect to appropriate view */
+        // Redirect to appropriate view
         request.getRequestDispatcher((Boolean)session.getAttribute("isMobile") ? "mobileHome.jsp" : "desktopHome.jsp").forward(request, response);
     }
 

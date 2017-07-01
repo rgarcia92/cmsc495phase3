@@ -94,3 +94,18 @@ Fixed issues identified by OWASP ZAP
 Added error page and 404 page
 Ensured all ResultSets, PreparedStatements, and Connections are closed
 Added mobile vs desktop check to each view
+
+v0.21 Authentication and Authorization Part I
+Added javax.mail.jar to Libraries
+Removed all try-catch blocks; error.jsp will handle all exceptions and errors
+Created users.db (see phase2-sql.sql file) and added it to the models package
+Created login view
+Created loginAuthenticate.jsp
+Created adminMenu view
+Implemented NIST security controls
+AU-3 - CONTENT OF AUDIT RECORDS 
+AU-8 - TIME STAMPS
+AC-3 - ACCESS ENFORCEMENT
+AU-2 - AUDIT EVENTS
+SI-10 - INFORMATION INPUT VALIDATION
+SC-13 - CRYPTOGRAPHIC PROTECTION

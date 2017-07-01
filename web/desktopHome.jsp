@@ -81,7 +81,10 @@
         <footer>
             <hr>
             <p>CMSC 495 6380 Current Trends and Projects in Computer Science (2175) Project</p>
-            <p>Copyright &copy; <% out.println((LocalDate.now().getYear() == 2017) ? "2017" : "2017 - " + String.valueOf(LocalDate.now().getYear())); %> - All Rights Reserved</p>
+            <p>
+                Copyright &copy; <% out.println((LocalDate.now().getYear() == 2017) ? "2017" : "2017 - " + String.valueOf(LocalDate.now().getYear())); %> - All Rights Reserved
+                <span class="loginKey"><a href="login.jsp" title="Login"><img src="login-key.png" alt="Login"/></a></span>
+            </p>
         </footer>
     </body>
 </html>

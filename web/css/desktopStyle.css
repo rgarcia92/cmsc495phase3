@@ -66,6 +66,7 @@ body {
 footer {
     font-weight: bold;
     text-align: center;
+    width: 100%;
 }
 a {
     color: inherit;
@@ -75,4 +76,10 @@ a {
     background-color: lightblue;
     color: black;
     white-space: nowrap;
+}
+.loginKey {
+    float: right;
+}
+.errorText {
+    color: red;
 }
