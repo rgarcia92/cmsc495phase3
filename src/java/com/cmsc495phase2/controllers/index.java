@@ -70,6 +70,8 @@ public final class index extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         // Start log
+        session.setAttribute("clientIP", request.getRemoteAddr());
+        session.setAttribute("loggedIn", false);        
         Utilities u = new Utilities();
         u.logEvent(String.format("System Accessed by %s", request.getRemoteAddr()));
         // Check for mobile browser

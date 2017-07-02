@@ -33,8 +33,8 @@ public final class DataAccess {
     /**
      * Basic method to retrieve all medications in the database
      * @return An array of Medication objects
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static ArrayList<Medications> selectAllMedications() throws ClassNotFoundException, SQLException {
         ArrayList<Medications> allMedications = new ArrayList<>();
@@ -120,8 +120,8 @@ public final class DataAccess {
      * An overloaded method to retrieve all medications starting with the letters from the selected keypad group
      * @param keypadLetterGroup the letters associated with the key from the keypad
      * @return An array of Medication objects
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static ArrayList<Medications> selectAllMedications(int keypadLetterGroup) throws ClassNotFoundException, SQLException {
         ArrayList<Medications> allMedications = new ArrayList<>();
@@ -212,8 +212,8 @@ public final class DataAccess {
     /**
      * Method to retrieve all medications by generic name
      * @return An array of Medication objects
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static ArrayList<Medications> selectMedicationsByGenericName() throws ClassNotFoundException, SQLException {
         ArrayList<Medications> allMedications = new ArrayList<>();
@@ -275,8 +275,8 @@ public final class DataAccess {
      * Method to retrieve medication details
      * @param medID the unique ID for medication in the database
      * @return A Medications object
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static Medications selectMedicationDetails(int medID) throws ClassNotFoundException, SQLException {
         Medications medication = new Medications();
@@ -329,8 +329,8 @@ public final class DataAccess {
     /**
      * A method to retrieve all conditions in the database
      * @return An array of Condition objects
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static ArrayList<Conditions> selectAllConditions() throws ClassNotFoundException, SQLException {
         ArrayList<Conditions> allConditionss = new ArrayList<>();
@@ -357,8 +357,8 @@ public final class DataAccess {
      * An overloaded method to retrieve all conditions starting with the letters from the selected keypad group
      * @param keypadLetterGroup the letters associated with the key from the keypad
      * @return An array of Condition objects
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static ArrayList<Conditions> selectAllConditions(int keypadLetterGroup) throws ClassNotFoundException, SQLException {
         ArrayList<Conditions> allConditionss = new ArrayList<>();
@@ -391,8 +391,8 @@ public final class DataAccess {
      * Method to retrieve condition details
      * @param conID the unique ID for condition in the database
      * @return A Conditions object
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static Conditions selectConditionDetails(int conID) throws ClassNotFoundException, SQLException {
         Conditions condition = new Conditions();
@@ -424,8 +424,8 @@ public final class DataAccess {
      * Method to retrieve all medications associated with a condition
      * @param conID the unique ID for condition in the database
      * @return An array of Conditions objects
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */
     public static ArrayList<Medications> selectMedicationsInCondition(int conID) throws ClassNotFoundException, SQLException {
         ArrayList<Medications> medications = new ArrayList<>();
@@ -459,8 +459,8 @@ public final class DataAccess {
      * Method to retrieve user information
      * @param username the unique username in the database
      * @return A User Condition object
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */    
     public static Users selectUser(String username) throws ClassNotFoundException, SQLException {
         Users user = new Users();
@@ -485,6 +485,23 @@ public final class DataAccess {
         conn.close();
         // Return results
         return user;
+    }
+
+    /**
+     * Method to update user last login
+     * @param userID the unique user ID in the database
+     * @param lastLogin the date using ZonedDateTime
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */    
+    public static void updateUserLastLogin(int userID, String lastLogin) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("users.db");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE USERS SET LASTLOGIN = ? WHERE USERID = ?");
+        stmt.setString(1, lastLogin);
+        stmt.setString(2, String.valueOf(userID));
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
     }
     
     /**

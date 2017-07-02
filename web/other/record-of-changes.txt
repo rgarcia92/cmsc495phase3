@@ -109,3 +109,8 @@ AC-3 - ACCESS ENFORCEMENT
 AU-2 - AUDIT EVENTS
 SI-10 - INFORMATION INPUT VALIDATION
 SC-13 - CRYPTOGRAPHIC PROTECTION
+
+v0.22 Distribution to AWS
+Fixed additional XSS vulnerabilities using JSTL
+Deactivated event log to use app on AWS Elastic Beanstalk
+Uploaded to AWS for live test

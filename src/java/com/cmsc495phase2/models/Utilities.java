@@ -47,6 +47,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -115,8 +117,8 @@ public final class Utilities {
      * Method used to connect to the SQLite database
      * @param dbName the name of the SQLite database to open
      * @return The Connection object
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
      */    
     public static Connection connectToDatabase(String dbName) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
@@ -125,43 +127,48 @@ public final class Utilities {
         Connection conn = DriverManager.getConnection("jdbc:sqlite::resource:" + url);
         return conn;
     }
-    
+
     /**
      * Method used to log events (e.g., session started, etc.)
      * @param logEntry the text of the entry
-     * @throws java.io.IOException
+     * @throws java.io.IOException if unable to write to file
      */    
     public void logEvent(String logEntry) throws IOException {
         // AU-3 - CONTENT OF AUDIT RECORDS
         // Write the text using the bufferedwriter to eventLog.txt
+        /* DISABLE WHEN RUNNING ON ELASTIC BEANSTALK
         BufferedWriter writer = new BufferedWriter(new FileWriter("eventlog.txt", true));
         writer.append(String.format("%s: %s", ZonedDateTime.now(ZoneOffset.UTC).toString(), logEntry));
         writer.newLine();
         writer.close();
+        */
     }
 
     /**
      * Method used to log events (e.g., session started, etc.)
      * @return An ArrayList of events
-     * @throws java.io.FileNotFoundException
-     * @throws java.io.IOException
+     * @throws java.io.FileNotFoundException if eventLog.txt is not found
+     * @throws java.io.IOException if unable to write to file
      */   
     public ArrayList readEventLog() throws FileNotFoundException, IOException {
         ArrayList events = new ArrayList();
+        /* DISABLE WHEN RUNNING ON ELASTIC BEANSTALK
         BufferedReader reader = new BufferedReader(new FileReader("eventlog.txt"));
         String eventEntry;
         while ((eventEntry = reader.readLine()) != null) {
             events.add(eventEntry);
         }
         reader.close();
+        */
+        events.add("Event Log Disabled on AWS Elastic Beanstalk");
         return events;
     }
     
     /**
      * Method used to send verification code to user for multi-factor authentication
      * @param emailAddress the address of the code recipient
-     * @throws java.io.UnsupportedEncodingException
-     * @throws javax.mail.internet.AddressException
+     * @throws java.io.UnsupportedEncodingException if unable to use UTF-8
+     * @throws javax.mail.internet.AddressException if unable to create FROM address
      */ 
     public void sendCode(String emailAddress) throws UnsupportedEncodingException, IOException, AddressException, MessagingException {
         // IA-2(1) IDENTIFICATION AND AUTHENTICATION (ORGANIZATIONAL USERS) | NETWORK ACCESS TO PRIVILEGED ACCOUNTS
@@ -205,10 +212,10 @@ public final class Utilities {
      * @param username the inputted username
      * @param password the inputted password
      * @return TRUE if the user is valid, FALSE if not
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
-     * @throws java.io.IOException
-     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database 
+     * @throws java.io.IOException if logEvent fails to write to file
+     * @throws java.security.NoSuchAlgorithmException if unable to use SHA256 algorithm
      */
     public Boolean authenticate(String username, String password) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
         Users user = selectUser(username);
@@ -219,8 +226,8 @@ public final class Utilities {
         } else {
             // Check if user is using the correct password
             if (getPasswordHash(password, user.getSalt()).equals(user.getPasswordHash())) {
-
                 logEvent(String.format("%s logged in", username));
+                DataAccess.updateUserLastLogin(user.getUserID(), ZonedDateTime.now(ZoneOffset.UTC).toString());
                 return true;
             } else {
                 logEvent(String.format("%s login failed", username));
@@ -234,8 +241,8 @@ public final class Utilities {
      * @param password the password
      * @param salt a 32-character alphanumeric salt
      * @return SHA256 salted hash
-     * @throws java.io.IOException
-     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.IOException if unable to build string
+     * @throws java.security.NoSuchAlgorithmException if unable to use SHA256 algorithm
      */
     public String getPasswordHash(String password, String salt) throws IOException, NoSuchAlgorithmException {
         // SC-13 - CRYPTOGRAPHIC PROTECTION
@@ -248,7 +255,7 @@ public final class Utilities {
         byte[] bytes = md.digest(password.getBytes("UTF-8"));
         // Create hash string
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i< bytes.length ;i++) {
+        for(Integer i=0; i < bytes.length; i++) {
             sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
         }
         // Return the hash
@@ -256,22 +263,17 @@ public final class Utilities {
     }
     
     /**
-     * Method remove byte-order-mark for UTF-8, UTF-16 (LE & BE) & UTF-32(LE & BE) courtesy of Andrei Punko
+     * Method remove byte-order-mark for UTF-8, UTF-16 (LE/BE) and UTF-32(LE/BE) courtesy of Andrei Punko
      * @param br the Buffered Reader
-     * @throws java.io.IOException
+     * @throws java.io.IOException if unable to read file
      */ 
     public static void removeBOM(Reader br) throws IOException {
         br.mark(1);
         char[] possibleBOM = new char[1];
         br.read(possibleBOM);
-
         if (possibleBOM[0] != '\ufeff')
         {
             br.reset();
         }
-    }
-    
-    public void throwException() throws Exception {
-        throw new Exception("Ahhh!");
     }
 }

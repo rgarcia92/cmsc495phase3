@@ -4,14 +4,12 @@
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
-<%@ page import="java.time.LocalDate" %>
 <%@ page isErrorPage="true" import="java.io.*" contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CMSC 495 EMR Project | Error Page</title>
-        <link href="${pageContext.request.contextPath}/css/desktopStyle.css" rel="stylesheet" type="text/css"/>
+        <jsp:include page="desktopHead.jsp" />
     </head>
     <body>
         <header>
@@ -28,9 +26,7 @@
             <h2>We've been notified and we're working on it. Meantime, if you have any questions, contact us at <a href="mailto:rgarcia92@student.umuc.edu"><span itemprop="email">rgarcia92@student.umuc.edu</span></a>.</h2>
         </main>
         <footer>
-            <hr>
-            <p>CMSC 495 6380 Current Trends and Projects in Computer Science (2175) Project</p>
-            <p>Copyright &copy; <% out.println((LocalDate.now().getYear() == 2017) ? "2017" : "2017 - " + String.valueOf(LocalDate.now().getYear())); %> - All Rights Reserved</p>
+            <jsp:include page="desktopFooter.jsp" />
         </footer>
     </body>
 </html>
