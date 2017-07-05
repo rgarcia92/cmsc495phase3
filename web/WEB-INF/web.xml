@@ -5,7 +5,7 @@
     </welcome-file-list>
     <servlet>
         <servlet-name>index</servlet-name>
-        <servlet-class>com.cmsc495phase2.controllers.index</servlet-class>
+        <servlet-class>com.cmsc495phase3.controllers.index</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>

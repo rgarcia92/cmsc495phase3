@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase2.models;
+package com.cmsc495phase3.models;
 
 /**
  *
@@ -22,12 +22,13 @@ package com.cmsc495phase2.models;
  */
 public final class Users {
     private int userID;
-    String username; /* Package-private: Used for sorting in DataAccess */
+    String userName; /* Package-private: Used for sorting in DataAccess */
     private String role;
     private String salt;
     private String passwordHash;
     private int lockedOut;
     private String lastLogin;
+    private String newLogin;
 
     /**
      * Basic constructor used to create a Users object
@@ -40,21 +41,23 @@ public final class Users {
      * Overloaded constructor used to create a Users object
      *
      * @param userID        the unique user identifier in the database
-     * @param username      the user's name
+     * @param userName      the user's name
      * @param role          the user's role
      * @param salt          the 32-character alphanumeric salt
      * @param passwordHash  the SHA256 password hash
      * @param lockedOut     the locked-out flag
      * @param lastLogin     the date of the last login
+     * @param newLogin      the date of the last login
      */
-    public Users(int userID, String username, String role, String salt, String passwordHash, int lockedOut, String lastLogin) {
+    public Users(int userID, String userName, String role, String salt, String passwordHash, int lockedOut, String lastLogin, String newLogin) {
         this.userID = userID;
-        this.username = username;
+        this.userName = userName;
         this.role = role;
         this.salt = salt;
         this.passwordHash = passwordHash;
         this.lockedOut = lockedOut;
         this.lastLogin = lastLogin;
+        this.newLogin = newLogin;
     }
 
     /* Getter functions */
@@ -62,8 +65,8 @@ public final class Users {
         return userID;
     }
 
-    public String getUserame() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
     
     public String getRole() {
@@ -85,14 +88,18 @@ public final class Users {
     public String getLastLogin() {
         return lastLogin;
     }
+
+    public String getNewLogin() {
+        return newLogin;
+    }
     
     /* Setter functions */
     public void setUserID(int userID) {
         this.userID = userID;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setRole(String role) {
@@ -113,5 +120,9 @@ public final class Users {
 
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public void setNewLogin(String newLogin) {
+        this.newLogin = newLogin;
     }
 }

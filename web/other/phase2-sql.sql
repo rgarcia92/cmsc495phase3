@@ -1,7 +1,7 @@
 CREATE TABLE [ROLES](
     [ROLEID] INT PRIMARY KEY NOT NULL UNIQUE, 
     [ROLE] TEXT(50) NOT NULL UNIQUE, 
-    [DESCRIPTION] TEXT(255)) WITHOUT ROWID;
+    [DESCRIPTION] TEXT(255));
 
 INSERT INTO ROLES (ROLEID,ROLE,DESCRIPTION) VALUES (1,'Administrator','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
 INSERT INTO ROLES (ROLEID,ROLE,DESCRIPTION) VALUES (2,'Editor','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
@@ -14,7 +14,7 @@ CREATE TABLE [USERS](
     [SALT] TEXT(32) NOT NULL, 
     [PASSWORDHASH] TEXT(255) NOT NULL, 
     [LOCKEDOUT] INT NOT NULL DEFAULT 0, 
-    [LASTLOGIN] TEXT(28) NOT NULL) WITHOUT ROWID;
+    [LASTLOGIN] TEXT(32) NOT NULL);
 
 INSERT INTO USERS (USERID,USERNAME,ROLEID,SALT,PASSWORDHASH,LOCKEDOUT,LASTLOGIN) VALUES (1,'rgarcia92@student.umuc.edu',1,
 'S8TeYznRvg7ngFwbJziSyWna7qv7p25O','92c2b4de1fbed202974f87c032ae93499266fc2cd4d415d376f335f72f382865',0,'Sun Jan 01 12:01:00 EST 2017');

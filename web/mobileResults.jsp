@@ -26,7 +26,7 @@
         </header>
         <main>
             <!-- Get data from model and display on page -->
-            <jsp:useBean id="dataAccess" class="com.cmsc495phase2.models.DataAccess">
+            <jsp:useBean id="dataAccess" class="com.cmsc495phase3.models.DataAccess">
                 <jsp:setProperty name="dataAccess" property="*" />
             </jsp:useBean>
             <table class="list">

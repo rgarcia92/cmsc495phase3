@@ -1,6 +1,6 @@
 <%-- 
-    Document   : desktopDetails
-    Created on : Jun 17, 2017, 11:40:34 AM
+    Document   : adminEditMedication
+    Created on : Jul 4, 2017, 9:58:43 PM
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
@@ -11,11 +11,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CMSC 495 EMR Project | Medication Details</title>
-        <jsp:include page="masters/desktopHead.jsp" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>CMSC 495 EMR Project | Admin Menu</title>
+        <jsp:include page="masters/adminHead.jsp" />
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] == false}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
@@ -26,9 +31,12 @@
         </noscript>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
-            <h2>Medication Details</h2>
+            <h2>Edit Medication</h2>
         </header>
-        <main>
+        <main style="text-align: left; width: 100%;">
+            <form action="adminMenu.jsp" method="post">
+                <p><input type="submit" value="Return to Medications Administration" /></p>
+            </form>
             <!-- Get data from model and display on page -->
             <c:if test="${!((fn:escapeXml(param.medID)).matches('[0-9]+'))}">
                 <c:redirect url="/desktopHome.jsp"/>
@@ -57,7 +65,8 @@
             </table>
         </main>
         <footer>
-            <jsp:include page="masters/desktopFooter.jsp" />
+            <jsp:include page="masters/adminFooter.jsp" />
         </footer>
     </body>
 </html>
+

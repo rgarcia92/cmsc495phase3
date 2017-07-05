@@ -1,6 +1,6 @@
 <%-- 
-    Document   : desktopHome
-    Created on : Jun 17, 2017, 8:14:06 AM
+    Document   : adminListUser
+    Created on : Jul 4, 2017, 10:00:01 PM
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
@@ -11,8 +11,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CMSC 495 Electronic Medical Reference Project</title>
-        <jsp:include page="masters/desktopHead.jsp" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>CMSC 495 EMR Project | Admin Menu</title>
+        <jsp:include page="masters/adminHead.jsp" />
         <link type="text/css" href="${pageContext.request.contextPath}/css/theme.blue.css" rel="stylesheet"/>
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tablesorter.combined.js"></script>
         <script id="js">
@@ -32,6 +33,10 @@
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] == false}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
@@ -42,41 +47,44 @@
         </noscript>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
-            <h2>Desktop View - Current as of 2017</h2>
+            <h2>User Administration</h2>
         </header>
-        <main>
+        <main style="text-align: left; width: 100%;">
+            <form action="adminMenu.jsp" method="post">
+                <p><input type="submit" value="Return to Administration Menu" /></p>
+            </form>
+            <hr>
             <div class="searchBox"><b>Search: <input class="search" type="search" placeholder="Search" data-column="all" /></b></div>
             <!-- Get data from model and display on page -->
             <jsp:useBean id="dataAccess" class="com.cmsc495phase3.models.DataAccess">
                 <jsp:setProperty name="dataAccess" property="*" />
             </jsp:useBean>
-            <c:set var="meds" value='${dataAccess.selectMedicationsByGenericName()}' />
+            <c:set var="users" value="${dataAccess.selectAllUsers()}" />
             <table id="desktopTable" class="list tablesorter">
                 <thead>
                     <tr class="listTitleRow">
-                        <td><h2>GENERIC NAME <img src="up-down-arrow.png" alt="<>" /></h2></td>
-                        <td><h2>BRAND NAME <img src="up-down-arrow.png" alt="<>" /></h2></td>
-                        <td><h2>CONDITION <img src="up-down-arrow.png" alt="<>" /></h2></td>
+                        <td><h4>User ID <img src="up-down-arrow.png" alt="<>" /></h4></td>
+                        <td><h4>User Name <img src="up-down-arrow.png" alt="<>" /></h4></td>
+                        <td><h4>Role <img src="up-down-arrow.png" alt="<>" /></h4></td>
+                        <td><h4>Locked Out <img src="up-down-arrow.png" alt="<>" /></h4></td>
+                        <td nowrap><h4>Last Login <img src="up-down-arrow.png" alt="<>" /></h4></td>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Highlight blood thinners in red -->
-                    <c:forEach items="${meds}" var="m">
-                    <tr style="${m.BTFlag == 1 ? 'background-color: red; color: white' : ''}">
-                        <td><h2><a href="desktopDetails.jsp?medID=${m.medID}" title="${m.GName}">${m.GName}</a></h2></td>
-                        <td><h2><a href="desktopDetails.jsp?medID=${m.medID}" title="${m.GName}">${m.BName}</a></h2></td>
-                        <td>
-                            <h2>${m.cond1}</h2>
-                            <h2>${m.cond2 != null ? m.cond2 : ''}</h2>
-                            <h2>${m.cond3 != null ? m.cond3 : ''}</h2>
-                        </td>
-                    </tr>
+                    <c:forEach items="${users}" var="u">
+                        <tr>
+                            <td><h4><a href="adminEditUser.jsp?userName=${u.userName}">${u.userID}</a></h4></td>
+                            <td><h4><a href="adminEditUser.jsp?userName=${u.userName}">${u.userName}</a></h4></td>
+                            <td><h4><a href="adminEditUser.jsp?userName=${u.userName}">${u.role}</a></h4></td>
+                            <td><h4><a href="adminEditUser.jsp?userName=${u.userName}">${u.lockedOut == 1 ? "Yes" : "No"}</a></h4></td>
+                            <td nowrap><h4><a href="adminEditUser.jsp?userName=${u.userName}">${u.lastLogin}</a></h4></td>
+                        </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </main>
         <footer>
-            <jsp:include page="masters/desktopFooter.jsp" />
+            <jsp:include page="masters/adminFooter.jsp" />
         </footer>
     </body>
 </html>

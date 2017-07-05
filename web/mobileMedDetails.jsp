@@ -27,7 +27,7 @@
         <main>
             <h1>Medication Details Page</h1>
             <!-- Get data from model and display on page -->
-            <jsp:useBean id="dataAccess" class="com.cmsc495phase2.models.DataAccess">
+            <jsp:useBean id="dataAccess" class="com.cmsc495phase3.models.DataAccess">
                 <jsp:setProperty name="dataAccess" property="*" />
             </jsp:useBean>
             <c:set var="m" value='${dataAccess.selectMedicationDetails(param.medID)}' />

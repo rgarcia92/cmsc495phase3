@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase2.models;
+package com.cmsc495phase3.models;
 
-import static com.cmsc495phase2.models.DataAccess.selectUser;
+import static com.cmsc495phase3.models.DataAccess.selectUser;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -36,6 +36,7 @@ import java.sql.SQLException;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
@@ -183,13 +184,13 @@ public final class Utilities {
         BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         // Remove byte-order-mark if present
         removeBOM(br);
-        final String username = br.readLine();
+        final String userName = br.readLine();
         final String password = br.readLine();
         Session session = Session.getInstance(props,
         new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
+                    return new PasswordAuthentication(userName, password);
             }
         });
         Random r = new Random( System.currentTimeMillis() );
@@ -209,7 +210,7 @@ public final class Utilities {
 
     /**
      * Method to authenticate user
-     * @param username the inputted username
+     * @param userName the inputted username
      * @param password the inputted password
      * @return TRUE if the user is valid, FALSE if not
      * @throws java.lang.ClassNotFoundException if external class is not found
@@ -217,22 +218,17 @@ public final class Utilities {
      * @throws java.io.IOException if logEvent fails to write to file
      * @throws java.security.NoSuchAlgorithmException if unable to use SHA256 algorithm
      */
-    public Boolean authenticate(String username, String password) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
-        Users user = selectUser(username);
+    public Boolean authenticate(String userName, String password) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
+        Users user = selectUser(userName.toLowerCase());
         // Check id user exists
-        if (user.getUserID() == 0) {
-            logEvent("Attempted login by unknown user");
-            return false;
+        if (user.getUserID() == 0) return false;
+        // Check if user is using the correct password
+        if (getPasswordHash(password, user.getSalt()).equals(user.getPasswordHash())) {
+            // Move current newLogin to lastLogin and update newLogin with current date and time
+            DataAccess.updateUserLastLogin(user.getUserID(), user.getNewLogin(), Date.from(java.time.ZonedDateTime.now(ZoneOffset.UTC).toInstant()).toString());
+            return true;
         } else {
-            // Check if user is using the correct password
-            if (getPasswordHash(password, user.getSalt()).equals(user.getPasswordHash())) {
-                logEvent(String.format("%s logged in", username));
-                DataAccess.updateUserLastLogin(user.getUserID(), ZonedDateTime.now(ZoneOffset.UTC).toString());
-                return true;
-            } else {
-                logEvent(String.format("%s login failed", username));
-                return false;
-            }
+            return false;
         }
     }
 
@@ -260,6 +256,22 @@ public final class Utilities {
         }
         // Return the hash
         return sb.toString();
+    }
+
+    /**
+     * Method used change password
+     * @param userName
+     * @param oldPassword the old password
+     * @param newPassword the new password
+     * @return if the password was changed
+     * @throws java.lang.ClassNotFoundException inherited from authenticate()
+     * @throws java.sql.SQLException inherited from authenticate()
+     * @throws java.io.IOException inherited from authenticate()
+     * @throws java.security.NoSuchAlgorithmException inherited from authenticate()
+     */
+    public boolean changePassword(String userName, String newPassword) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
+        Users u = DataAccess.selectUser(userName);
+        return DataAccess.updateUserPassword(u.getUserID(), getPasswordHash(newPassword, u.getSalt()));
     }
     
     /**

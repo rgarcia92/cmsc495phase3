@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : Jun 28, 2017, 2:52:37 PM
+    Document   : adminEditCondition
+    Created on : Jul 4, 2017, 9:59:29 PM
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
@@ -11,11 +11,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CMSC 495 EMR Project | Login Page</title>
-        <jsp:include page="masters/desktopHead.jsp" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>CMSC 495 EMR Project | Admin Menu</title>
+        <jsp:include page="masters/adminHead.jsp" />
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] == false}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
@@ -26,22 +31,16 @@
         </noscript>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
-            <h2>Login Page</h2>
+            <h2>Edit Condition</h2>
         </header>
         <main>
-            <form action="${pageContext.request.contextPath}/loginAuthenticate.jsp" method="post">
-                <h3>Username: <input type="text" name="uname" required /></h3>
-                <h3>Password: <input type="password" name="pword" required /></h3>
-                <input type="submit" />
-            </form>
-            <font color="red">
-                <c:if test="${not empty fn:escapeXml(param.errorMessage)}">
-                    <h3>${fn:escapeXml(param.errorMessage)}</h3>
-                </c:if>
-            </font>
+            <h2>Welcome, ${sessionScope['uname']}!</h2>
+            <div style="text-align: left; width: 100%;">
+            </div>
         </main>
         <footer>
-            <jsp:include page="masters/desktopFooter.jsp" />
+            <jsp:include page="masters/adminFooter.jsp" />
         </footer>
     </body>
 </html>
+

@@ -1,5 +1,5 @@
 <%-- 
-    Document   : adminMenu
+    Document   : adminTestPage
     Created on : Jun 28, 2017, 4:46:46 PM
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
@@ -37,10 +37,8 @@
             <h2>Welcome, ${sessionScope['uname']}!</h2>
             <div style="text-align: left; width: 100%;">
                 <hr>
-                <h2>User Functions:</h2>
-                <form action="${pageContext.request.contextPath}/adminEditProfile.jsp" method="post">
-                    <p><input type="submit" value="View and Edit Profile" /></p>
-                </form>
+                <h2>If you can read this, you have User privileges!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <jsp:useBean id="utilities" class="com.cmsc495phase3.models.Utilities">
                     <jsp:setProperty name="utilities" property="*" />
                 </jsp:useBean>
@@ -50,27 +48,38 @@
                 <c:if test="${sessionScope['role'] == 'Editor' || sessionScope['role'] == 'Administrator'}">
                     <hr>
                     <h2>If you can read this, you have Editor privileges!</h2>
-                    <form action="${pageContext.request.contextPath}/adminListMedications.jsp" method="post">
-                        <p><input type="submit" value="Medications Administration" /></p>
-                    </form>
-                    <form action="${pageContext.request.contextPath}/adminListConditions.jsp" method="post">
-                        <p><input type="submit" value="Conditions Administration" /></p>
-                    </form>
+                    <c:set var="u" value="${dataAccess.selectUser(sessionScope['uname'])}" />
+                    <p>${u.userID}</p>
+                    <p>${u.userName}</p>
+                    <p>${u.role}</p>
+                    <p>${u.salt}</p>
+                    <p>${u.passwordHash}</p>
+                    <p>${u.lockedOut == 1 ? "Yes" : "No"}</p>
+                    <p>${u.lastLogin}</p>
                 </c:if>
                 <c:if test="${sessionScope['role'] == 'Administrator'}">
                     <hr>
                     <h2>If you can read this, you have Administrator privileges!</h2>
-                    <form action="${pageContext.request.contextPath}/adminListUsers.jsp" method="post">
-                        <p><input type="submit" value="Users Administration" /></p>
-                    </form>
-                    <form action="${pageContext.request.contextPath}/adminUpdateDatabase.jsp" method="post">
-                        <p><input type="submit" value="Full Database Update" /></p>
-                    </form>
-                    <font color="red">
-                        <c:if test="${not empty fn:escapeXml(param.errorMessage)}">
-                            <h3>${fn:escapeXml(param.errorMessage)}</h3>
-                        </c:if>
-                    </font>
+                    <p><b>Event Log:</b></p>
+                    <c:set var="events" value="${utilities.readEventLog()}" />
+                    <c:forEach items="${events}" var="e">
+                        <p>${e}<p>
+                    </c:forEach>
+                    <p><b>Users:</b></p>
+                    <c:set var="users" value="${dataAccess.selectAllUsers()}" />
+                    <table>
+                        <c:forEach items="${users}" var="u">
+                            <tr>
+                                <td>${u.userID}</td>
+                                <td>${u.userName}</td>
+                                <td>${u.role}</td>
+                                <td>${u.salt}</td>
+                                <td>${u.passwordHash}</td>
+                                <td>${u.lockedOut}</td>
+                                <td>${u.lastLogin}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </c:if>
             </div>
         </main>

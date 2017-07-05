@@ -7,7 +7,8 @@ CREATE TABLE [MEDICATIONS](
     [BTFLAG] INT, 
     [SIDE_EFFECTS] TEXT(512), 
     [INTERACTIONS] TEXT(512), 
-    [WARNINGS] TEXT(512)) WITHOUT ROWID;
+    [WARNINGS] TEXT(512));
+
 
 INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (1,'Acyclovir','Zovirax','Antiviral',null,null,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
 INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (2,'Adalimumab','Humira','Immunosuppressive',null,null,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
@@ -210,10 +211,11 @@ INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS,
 INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (199,'Warfarin','Coumadin','Anticoagulant',null,1,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
 INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (200,'Zolpidem','Ambien','Sedative',4,null,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
 
+
 CREATE TABLE [CONDITIONS](
     [CONID] INT PRIMARY KEY NOT NULL UNIQUE, 
     [CONDITION] TEXT(50) NOT NULL UNIQUE, 
-    [DESCRIPTION] TEXT(512)) WITHOUT ROWID;
+    [DESCRIPTION] TEXT(512));
 
 
 INSERT INTO CONDITIONS (CONID, CONDITION, DESCRIPTION) VALUES (1,'Addiction','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
@@ -280,7 +282,7 @@ INSERT INTO CONDITIONS (CONID, CONDITION, DESCRIPTION) VALUES (59,'UTI','Lorem i
 CREATE TABLE [MEDCON](
     [MEDID] INT REFERENCES MEDICATIONS([MEDID]) ON DELETE CASCADE ON UPDATE CASCADE, 
     [CONID] INT REFERENCES CONDITIONS([CONID]) ON DELETE CASCADE ON UPDATE CASCADE, 
-    PRIMARY KEY([MEDID], [CONID])) WITHOUT ROWID;
+    PRIMARY KEY([MEDID], [CONID]));
 
 
 INSERT INTO MEDCON (MEDID, CONID) VALUES (1,13);

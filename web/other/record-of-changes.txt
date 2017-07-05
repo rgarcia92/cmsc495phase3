@@ -114,3 +114,28 @@ v0.22 Distribution to AWS
 Fixed additional XSS vulnerabilities using JSTL
 Deactivated event log to use app on AWS Elastic Beanstalk
 Uploaded to AWS for live test
+
+v0.30 Created CRUD views
+Removed WITHOUT ROWID restrictions from database tables
+Fixed UserName variable misspelling
+Added NEWLOGIN column to USERS table
+Modified Users class by adding newLogin string
+Modified DataAccess class by adding newLogin string
+Added adminEditProfile.jsp and adminUpdatePassword.jsp
+Added Medication admin page shells:
+adminListMedications.jsp
+adminEditMedication.jsp?medID=XX
+adminAddMedication.jsp
+Added Condition admin page shells:
+adminListConditions.jsp
+adminEditCondition.jsp?conID=XX
+adminAddCondition.jsp
+Added User admin page shells:
+adminListUser.jsp
+adminEditUser.jsp?userID=XX
+adminAddUser.jsp
+Added Medication Database Update shell:
+adminUpdateDatabase.jsp
+Added Event Log
+adminEventLog.jsp
+Updated unit test files

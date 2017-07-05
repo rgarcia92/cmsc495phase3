@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase2.models;
+package com.cmsc495phase3.models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -457,26 +457,27 @@ public final class DataAccess {
 
     /**
      * Method to retrieve user information
-     * @param username the unique username in the database
+     * @param userName the unique username in the database
      * @return A User Condition object
      * @throws java.lang.ClassNotFoundException if external class is not found
      * @throws java.sql.SQLException if unable to retrieve data from the database
      */    
-    public static Users selectUser(String username) throws ClassNotFoundException, SQLException {
+    public static Users selectUser(String userName) throws ClassNotFoundException, SQLException {
         Users user = new Users();
         Connection conn = Utilities.connectToDatabase("users.db");
-        PreparedStatement stmt = conn.prepareStatement("SELECT USERS.USERID, USERS.USERNAME, ROLES.ROLE, USERS.SALT, USERS.PASSWORDHASH, USERS.LOCKEDOUT, USERS.LASTLOGIN FROM USERS LEFT JOIN ROLES ON USERS.ROLEID = ROLES.ROLEID WHERE USERNAME = ?");
-        stmt.setString(1, username);
+        PreparedStatement stmt = conn.prepareStatement("SELECT USERS.USERID, USERS.USERNAME, ROLES.ROLE, USERS.SALT, USERS.PASSWORDHASH, USERS.LOCKEDOUT, USERS.LASTLOGIN, USERS.NEWLOGIN FROM USERS LEFT JOIN ROLES ON USERS.ROLEID = ROLES.ROLEID WHERE USERNAME = ?");
+        stmt.setString(1, userName.toLowerCase());
         ResultSet rs = stmt.executeQuery();
         /* Check for data */
         if (rs.next()) {
             user.setUserID(rs.getInt("USERID"));
-            user.setUsername(rs.getString("USERNAME"));
+            user.setUserName(rs.getString("USERNAME"));
             user.setRole(rs.getString("ROLE"));
             user.setSalt(rs.getString("SALT"));
             user.setPasswordHash(rs.getString("PASSWORDHASH"));
             user.setLockedOut(rs.getInt("LOCKEDOUT"));
             user.setLastLogin(rs.getString("LASTLOGIN"));
+            user.setNewLogin(rs.getString("NEWLOGIN"));
         } else {
             user.setUserID(0);
         }
@@ -490,18 +491,74 @@ public final class DataAccess {
     /**
      * Method to update user last login
      * @param userID the unique user ID in the database
-     * @param lastLogin the date using ZonedDateTime
+     * @param lastLogin the date of the last login from newLogin
+     * @param newLogin the date using ZonedDateTime
+     * @return true if successful, false if not
      * @throws java.lang.ClassNotFoundException if external class is not found
      * @throws java.sql.SQLException if unable to retrieve data from the database
      */    
-    public static void updateUserLastLogin(int userID, String lastLogin) throws ClassNotFoundException, SQLException {
+    public static Boolean updateUserLastLogin(int userID, String lastLogin, String newLogin) throws ClassNotFoundException, SQLException {
         Connection conn = Utilities.connectToDatabase("users.db");
-        PreparedStatement stmt = conn.prepareStatement("UPDATE USERS SET LASTLOGIN = ? WHERE USERID = ?");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE USERS SET LASTLOGIN = ?, NEWLOGIN = ? WHERE USERID = ?");
         stmt.setString(1, lastLogin);
+        stmt.setString(2, newLogin);
+        stmt.setString(3, String.valueOf(userID));
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+
+    /**
+     * Method to update user password
+     * @param userID the unique user ID in the database
+     * @param newPasswordHash the new salted password hash
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */    
+    public static Boolean updateUserPassword(int userID, String newPasswordHash) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("users.db");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE USERS SET PASSWORDHASH = ? WHERE USERID = ?");
+        stmt.setString(1, newPasswordHash);
         stmt.setString(2, String.valueOf(userID));
         int check = stmt.executeUpdate();
         stmt.close();
         conn.close();
+        return (check == 1);
+    }
+    
+    /**
+     * Method to retrieve all users
+     * @return An array of Users objects
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */
+    public static ArrayList<Users> selectAllUsers() throws ClassNotFoundException, SQLException {
+        ArrayList<Users> users = new ArrayList<>();
+        Connection conn = Utilities.connectToDatabase("users.db");
+        PreparedStatement stmt = conn.prepareStatement("SELECT USERS.USERID, USERS.USERNAME, ROLES.ROLE, USERS.SALT, USERS.PASSWORDHASH, USERS.LOCKEDOUT, USERS.LASTLOGIN, USERS.NEWLOGIN FROM USERS LEFT JOIN ROLES ON USERS.ROLEID = ROLES.ROLEID");
+        ResultSet rs = stmt.executeQuery();
+        /* Check for data */
+        while (rs.next()) {
+            users.add(new Users(
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("role"),
+                    rs.getString("salt"),
+                    rs.getString("passwordHash"),
+                    rs.getInt("lockedOut"),
+                    rs.getString("lastLogin"),
+                    rs.getString("newLogin")
+            ));
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
+        // Sorting
+        users.sort(Comparator.comparing(u -> u.userName));
+        // Return results
+        return users;
     }
     
     /**

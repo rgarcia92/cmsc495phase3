@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cmsc495phase2.controllers;
+package com.cmsc495phase3.controllers;
 
-import com.cmsc495phase2.models.Utilities;
+import com.cmsc495phase3.models.Utilities;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
