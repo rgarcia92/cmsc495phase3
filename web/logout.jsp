@@ -1,6 +1,6 @@
 <%-- 
-    Document   : adminEventLog
-    Created on : Jul 4, 2017, 10:20:27 PM
+    Document   : logout
+    Created on : Jul 8, 2017, 2:28:51 AM
     Author     : Rob Garcia at rgarcia92.student.umuc.edu
 --%>
 
@@ -11,9 +11,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CMSC 495 EMR Project | Admin Menu</title>
-        <jsp:include page="masters/adminHead.jsp" />
+        <title>CMSC 495 EMR Project | Authentication Page</title>
+        <jsp:include page="masters/desktopHead.jsp" />
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
@@ -22,25 +21,23 @@
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
             <c:redirect url="/mobileHome.jsp"/>
         </c:if>
-        <!-- Redirect if not authenticated -->
-        <c:if test="${sessionScope['loggedIn'] != true && (sessionScope['role'] != 'Editor' || sessionScope['role'] != 'Administrator')}">
-            <c:redirect url="/login.jsp" />
-        </c:if>
         <noscript>
             <p class="warningText">(Javascript disabled. Please enable Javascript for full functionality)</p>
         </noscript>
         <header>
             <h1>CMSC 495 Electronic Medical Reference Project</h1>
-            <h2>Event Log</h2>
+            <h2>Logout Page</h2>
         </header>
         <main>
-            <c:set var="events" value="${utilities.readEventLog()}" />
-            <c:forEach items="${events}" var="e">
-                <p>${e}<p>
-            </c:forEach>
+            <c:remove scope="session" var="loggedIn" />
+            <c:remove scope="session" var="uname" />
+            <c:remove scope="session" var="role" />
+            <c:remove scope="session" var="lockedOut" />
+            <c:remove scope="session" var="lastLogin" />
+            <c:redirect url="desktopHome.jsp"/>
         </main>
         <footer>
-            <jsp:include page="masters/adminFooter.jsp" />
+            <jsp:include page="masters/desktopFooter.jsp" />
         </footer>
     </body>
 </html>

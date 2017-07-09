@@ -17,14 +17,14 @@
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
-        <!-- Redirect if not authenticated -->
-        <c:if test="${sessionScope['loggedIn'] == false}">
-            <c:redirect url="/login.jsp" />
-        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
             <c:redirect url="/mobileHome.jsp"/>
+        </c:if>
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] != true}">
+            <c:redirect url="/login.jsp" />
         </c:if>
         <noscript>
             <p class="warningText">(Javascript disabled. Please enable Javascript for full functionality)</td></tr>
@@ -37,9 +37,14 @@
             <c:catch var="catchException">
             <h2>Welcome, ${sessionScope['uname']}!</h2>
             <div style="text-align: left; width: 100%;">
-                <form action="adminMenu.jsp" method="post">
-                    <p><input type="submit" value="Return to Administration Menu" /></p>
-                </form>
+                <p>
+                    <form action="adminMenu.jsp" method="post" style="display: inline;">
+                        <input type="submit" value="Return to Administration Menu" />
+                    </form>&nbsp;or&nbsp;
+                    <form action="logout.jsp" method="post" style="display: inline;">
+                        <input type="submit" value="Log Out" />
+                    </form>
+                </p>
                 <hr>
                 <h2>User Information:</h2>
                 <jsp:useBean id="dataAccess" class="com.cmsc495phase3.models.DataAccess">

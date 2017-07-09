@@ -17,14 +17,14 @@
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
-        <!-- Redirect if not authenticated -->
-        <c:if test="${sessionScope['loggedIn'] == false}">
-            <c:redirect url="/login.jsp" />
-        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
             <c:redirect url="/mobileHome.jsp"/>
+        </c:if>
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] != true || sessionScope['role'] != 'Administrator'}">
+            <c:redirect url="/login.jsp" />
         </c:if>
         <noscript>
             <p class="warningText">(Javascript disabled. Please enable Javascript for full functionality)</p>

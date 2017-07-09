@@ -139,3 +139,19 @@ adminUpdateDatabase.jsp
 Added Event Log
 adminEventLog.jsp
 Updated unit test files
+
+v3.1 Added CRUD functionality
+Fixed authorization for all admin pages
+Added logout.jsp and logout button to all admin pages
+Added adminCreateCondition.jsp
+Added adminCreateMedication.jsp
+Added adminUpdateCondition.jsp
+Added adminUpdateMedication.jsp
+Added insertMedication(), updateMedication(), deleteMedication to DataAccess class
+Added insertCondition(), updateCondition(), deleteCondition to DataAccess class
+Added create, update, and delete functionality to
+adminEditMedication.jsp?medID=XX
+adminAddMedication.jsp
+adminEditCondition.jsp?conID=XX
+adminAddCondition.jsp
+

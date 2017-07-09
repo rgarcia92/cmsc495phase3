@@ -17,14 +17,14 @@
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
-        <!-- Redirect if not authenticated -->
-        <c:if test="${sessionScope['loggedIn'] == false}">
-            <c:redirect url="/login.jsp" />
-        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
             <c:redirect url="/mobileHome.jsp"/>
+        </c:if>
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] != true && (sessionScope['role'] != 'Editor' || sessionScope['role'] != 'Administrator')}">
+            <c:redirect url="/login.jsp" />
         </c:if>
         <noscript>
             <p class="warningText">(Javascript disabled. Please enable Javascript for full functionality)</p>
@@ -34,9 +34,46 @@
             <h2>Edit Condition</h2>
         </header>
         <main>
+            <c:catch var="catchException">
             <h2>Welcome, ${sessionScope['uname']}!</h2>
             <div style="text-align: left; width: 100%;">
+                <p>
+                    <form action="adminListConditions.jsp" method="post" style="display: inline;">
+                        <input type="submit" value="Return to Conditions Administration Menu" />
+                    </form>&nbsp;or&nbsp;
+                    <form action="logout.jsp" method="post" style="display: inline;">
+                        <input type="submit" value="Log Out" />
+                    </form>
+                </p>
+                <!-- Get data from model and display on page -->
+                <c:if test="${!((fn:escapeXml(param.conID)).matches('[0-9]+'))}">
+                    <c:redirect url="/adminListConditions.jsp"/>
+                </c:if>
+                <font color="red">
+                    <c:if test="${not empty fn:escapeXml(param.errorMessage)}">
+                        <h3>${fn:escapeXml(param.errorMessage)}</h3>
+                    </c:if>
+                </font>
+                <jsp:useBean id="dataAccess" class="com.cmsc495phase3.models.DataAccess">
+                    <jsp:setProperty name="dataAccess" property="*" />
+                </jsp:useBean>
+                <c:set var="c" value="${dataAccess.selectConditionDetails(fn:escapeXml(param.conID))}" />
+                <form action="${pageContext.request.contextPath}/adminUpdateCondition.jsp" method="post">
+                    <input type="hidden" name="conID" value="${param.conID}" />
+                    <table class="list">
+                        <tr><td class="detailsTD" style="width:20em;"><h2>Condition:</h2></td>
+                            <td><h2><input type="text" name="condition" value=${c.condition} maxlength="50"></h2></td></tr>
+                        <tr><td class="detailsTD"><h2>Description:</h2></td>
+                            <td><h2><textarea name="description" maxlength="512" rows="4" style="width:100%;">${c.description}</textarea></h2></td></tr>
+                    </table>
+                    <p style="text-align: center;">
+                        <input type="submit" name="submit" value="Update" style="display: inline;">&nbsp;or
+                        <input type="submit" name="submit" value="Delete" style="display: inline;" onclick="return confirm('Are you sure you want to delete this item?');">
+                    </p>
+                </form>
             </div>
+            </c:catch>
+            <p>${catchException == null ? '' : catchException.message}</p>
         </main>
         <footer>
             <jsp:include page="masters/adminFooter.jsp" />

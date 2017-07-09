@@ -17,14 +17,14 @@
     </head>
     <body>
         <!-- This needs to stay here since you cannot redirect from an included file -->
-        <!-- Redirect if not authenticated -->
-        <c:if test="${sessionScope['loggedIn'] == false}">
-            <c:redirect url="/login.jsp" />
-        </c:if>
         <!-- Redirect if mobile -->
         <c:set var="browser" value="${header['User-Agent']}" scope="session" />
         <c:if test = "${fn:containsIgnoreCase(browser, 'mobi')}">
             <c:redirect url="/mobileHome.jsp"/>
+        </c:if>
+        <!-- Redirect if not authenticated -->
+        <c:if test="${sessionScope['loggedIn'] != true || sessionScope['role'] != 'Administrator'}">
+            <c:redirect url="/login.jsp" />
         </c:if>
         <noscript>
             <p class="warningText">(Javascript disabled. Please enable Javascript for full functionality)</p>
@@ -35,9 +35,14 @@
         </header>
         <main>
             <div style="text-align: left; width: 100%;">
-                <form action="adminListUsers.jsp" method="post">
-                    <p><input type="submit" value="Return to User Administration" /></p>
-                </form>
+                <p>
+                    <form action="adminListUsers.jsp" method="post" style="display: inline;">
+                        <input type="submit" value="Return to User Administration Menu" />
+                    </form>&nbsp;or&nbsp;
+                    <form action="logout.jsp" method="post" style="display: inline;">
+                        <input type="submit" value="Log Out" />
+                    </form>
+                </p>
                 <hr>
                 <h2>User Information:</h2>
                 <jsp:useBean id="dataAccess" class="com.cmsc495phase3.models.DataAccess">
@@ -47,8 +52,8 @@
                 <table>
                     <tr><td><b>User Name:</b></td><td>${u.userName}</td></tr>
                     <tr><td><b>Role:</b></td><td>${u.role}</td></tr>
-                    <tr><td><b>Role:</b></td><td>${u.salt}</td></tr>
-                    <tr><td><b>Role:</b></td><td>${u.passwordHash}</td></tr>
+                    <tr><td><b>Salt:</b></td><td>${u.salt}</td></tr>
+                    <tr><td><b>Hash:</b></td><td>${u.passwordHash}</td></tr>
                     <tr><td><b>Locked Out:</b></td><td>${u.lockedOut == 1 ? "Yes" : "No"}</td></tr>
                     <tr><td><b>Last Login:</b></td><td>${u.lastLogin}</td></tr>
                 </table>
@@ -57,7 +62,7 @@
                     <p><input type="submit" value="Reset Password" /></p>
                 </form>
                 <form action="" method="post">
-                    <p><input type="submit" value="Delete User" /></p>
+                    <p><input type="submit" name="submit" value="Delete User" style="display: inline;" onclick="return confirm('Are you sure you want to delete this user?');"></p>
                 </form>
                 <font color="red">
                     <c:if test="${not empty fn:escapeXml(param.errorMessage)}">

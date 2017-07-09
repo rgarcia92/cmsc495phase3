@@ -562,6 +562,166 @@ public final class DataAccess {
     }
     
     /**
+     * Method to insert medication into database
+     * @param gName        the medication generic name
+     * @param bName        the medication generic name
+     * @param action       the medication action/mechanism
+     * @param dea          the DEA Schedule class for controlled substances
+     * @param btFlag       1 if the medication is a blood thinner, null if not
+     * @param side_effects the medication side effects
+     * @param interactions the medication interactions
+     * @param warnings     the medication warnings
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */
+    public static Boolean insertMedication(String gName, String bName, String action, int btFlag, int dea, String side_effects, String interactions, String warnings) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (((SELECT MAX(MEDID) FROM MEDICATIONS) + 1), ?, ?, ?, ?, ?, ?, ?, ?)");
+        stmt.setString(1, gName);
+        stmt.setString(2, bName);
+        stmt.setString(3, action);
+        stmt.setInt(5, btFlag);
+        stmt.setInt(4, dea);
+        stmt.setString(6, side_effects);
+        stmt.setString(7, interactions);
+        stmt.setString(8, warnings);
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+    
+    /**
+     * Method to update a medication
+     * @param medID        the unique medication identifier in the database
+     * @param gName        the medication generic name
+     * @param bName        the medication generic name
+     * @param action       the medication action/mechanism
+     * @param dea          the DEA Schedule class for controlled substances
+     * @param btFlag       1 if the medication is a blood thinner, null if not
+     * @param side_effects the medication side effects
+     * @param interactions the medication interactions
+     * @param warnings     the medication warnings
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */  
+    public static Boolean updateMedication(int medID, String gName, String bName, String action, int dea, int btFlag, String side_effects, String interactions, String warnings) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE MEDICATIONS SET GNAME = ?, BNAME = ?, ACTION = ?, DEA = ?, BTFLAG = ?, SIDE_EFFECTS = ?, INTERACTIONS = ?, WARNINGS = ? WHERE MEDID = ?");
+        stmt.setString(1, gName);
+        stmt.setString(2, bName);
+        stmt.setString(3, action);
+        stmt.setInt(4, dea);
+        stmt.setInt(5, btFlag);
+        stmt.setString(6, side_effects);
+        stmt.setString(7, interactions);
+        stmt.setString(8, warnings);
+        stmt.setInt(9, medID);
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+    
+    /**
+     * Method to delete medication
+     * @param medID the unique medication identifier in the database
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */  
+    public static Boolean deleteMedication(int medID) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM MEDICATIONS WHERE MEDID = ?");
+        stmt.setInt(1, medID);
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+
+    /**
+     * Method to insert condition into database
+     * @param condition    the condition name
+     * @param description  the description of the condition
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */
+    public static Boolean insertCondition(String condition, String description) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO CONDITIONS (CONID, CONDITION, DESCRIPTION) VALUES (((SELECT MAX(CONID) FROM CONDITIONS) + 1), ?, ?)");
+        stmt.setString(1, condition);
+        stmt.setString(2, description);
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+    
+    /**
+     * Method to update a condition
+     * @param conID        the unique condition identifier in the database
+     * @param condition    the condition name
+     * @param description  the description of the condition
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */  
+    public static Boolean updateCondition(int conID, String condition, String description) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE CONDITIONS SET CONDITION = ?, DESCRIPTION = ? WHERE CONID = ?");
+        stmt.setString(1, condition);
+        stmt.setString(2, description);
+        stmt.setInt(3, conID);
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+    
+    /**
+     * Method to delete condition
+     * @param conID the unique condition identifier in the database
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */  
+    public static Boolean deleteCondition(int conID) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM CONDITIONS WHERE CONID = ?");
+        stmt.setInt(1, conID);
+        int check = stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return (check == 1);
+    }
+    
+    /**
+     * Method to update the MEDCON junction table
+     * @param medID the unique medication ID
+     * @param conID the unique condition ID
+     * @return true if successful, false if not
+     * @throws java.lang.ClassNotFoundException if external class is not found
+     * @throws java.sql.SQLException if unable to retrieve data from the database
+     */      
+    public static Boolean updateMedConTable(int medID, int conID) throws ClassNotFoundException, SQLException {
+        Connection conn = Utilities.connectToDatabase("medications.db");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO MEDCON (MEDID, CONID) VALUES (?, ?)");
+        stmt.setInt(1, medID);
+        stmt.setInt(2, conID);
+        Boolean check = stmt.execute();
+        // Remove duplicates
+        stmt = conn.prepareStatement("DELETE FROM MEDCON WHERE ROWID NOT IN (SELECT MIN(ROWID) FROM MEDCON GROUP BY MEDID, CONID)");
+        check = stmt.execute();
+        stmt.close();
+        conn.close();
+        return check;
+    }
+    
+    /**
      * Conlist Utility Object for use by DataAccess methods
      */
     public final static class ConList {

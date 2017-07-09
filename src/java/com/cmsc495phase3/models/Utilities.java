@@ -260,8 +260,7 @@ public final class Utilities {
 
     /**
      * Method used change password
-     * @param userName
-     * @param oldPassword the old password
+     * @param userName the user's name
      * @param newPassword the new password
      * @return if the password was changed
      * @throws java.lang.ClassNotFoundException inherited from authenticate()
