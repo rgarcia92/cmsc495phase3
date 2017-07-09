@@ -58,7 +58,7 @@ public final class UsersTest {
         int expResult = 0;
         int result = instance.getUserID();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -72,7 +72,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getUserName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -86,7 +86,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getRole();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -100,7 +100,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getSalt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -114,7 +114,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getPasswordHash();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -128,7 +128,7 @@ public final class UsersTest {
         int expResult = 0;
         int result = instance.getLockedOut();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -142,7 +142,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getLastLogin();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -155,7 +155,7 @@ public final class UsersTest {
         int userID = 0;
         Users instance = new Users();
         instance.setUserID(userID);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -168,7 +168,7 @@ public final class UsersTest {
         String userName = "";
         Users instance = new Users();
         instance.setUserName(userName);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -181,7 +181,7 @@ public final class UsersTest {
         String role = "";
         Users instance = new Users();
         instance.setRole(role);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -194,7 +194,7 @@ public final class UsersTest {
         String salt = "";
         Users instance = new Users();
         instance.setSalt(salt);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -207,7 +207,7 @@ public final class UsersTest {
         String passwordHash = "";
         Users instance = new Users();
         instance.setPasswordHash(passwordHash);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -220,7 +220,7 @@ public final class UsersTest {
         int lockedOut = 0;
         Users instance = new Users();
         instance.setLockedOut(lockedOut);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -233,7 +233,7 @@ public final class UsersTest {
         String lastLogin = "";
         Users instance = new Users();
         instance.setLastLogin(lastLogin);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -247,7 +247,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getUserName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -261,7 +261,7 @@ public final class UsersTest {
         String expResult = "";
         String result = instance.getNewLogin();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -274,7 +274,7 @@ public final class UsersTest {
         String newLogin = "";
         Users instance = new Users();
         instance.setNewLogin(newLogin);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
     

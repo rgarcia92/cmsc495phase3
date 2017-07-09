@@ -58,7 +58,7 @@ public final class MedicationsTest {
         int expResult = 0;
         int result = instance.getMedID();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -72,7 +72,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getGName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -86,7 +86,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getBName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -100,7 +100,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getAction();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -114,7 +114,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getCond1();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -128,7 +128,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getCond2();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -142,7 +142,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getCond3();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -156,7 +156,7 @@ public final class MedicationsTest {
         int expResult = 0;
         int result = instance.getDEA();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -170,7 +170,7 @@ public final class MedicationsTest {
         int expResult = 0;
         int result = instance.getBTFlag();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -184,7 +184,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getSide_Effects();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -198,7 +198,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getInteractions();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -212,7 +212,7 @@ public final class MedicationsTest {
         String expResult = "";
         String result = instance.getWarnings();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -225,7 +225,7 @@ public final class MedicationsTest {
         int medID = 0;
         Medications instance = new Medications();
         instance.setMedID(medID);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -238,7 +238,7 @@ public final class MedicationsTest {
         String gName = "";
         Medications instance = new Medications();
         instance.setGName(gName);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -251,7 +251,7 @@ public final class MedicationsTest {
         String bName = "";
         Medications instance = new Medications();
         instance.setBName(bName);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -264,7 +264,7 @@ public final class MedicationsTest {
         String action = "";
         Medications instance = new Medications();
         instance.setAction(action);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -277,7 +277,7 @@ public final class MedicationsTest {
         String cond1 = "";
         Medications instance = new Medications();
         instance.setCond1(cond1);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -290,7 +290,7 @@ public final class MedicationsTest {
         String cond2 = "";
         Medications instance = new Medications();
         instance.setCond2(cond2);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -303,7 +303,7 @@ public final class MedicationsTest {
         String cond3 = "";
         Medications instance = new Medications();
         instance.setCond3(cond3);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -316,7 +316,7 @@ public final class MedicationsTest {
         int dea = 0;
         Medications instance = new Medications();
         instance.setDEA(dea);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -329,7 +329,7 @@ public final class MedicationsTest {
         int btFlag = 0;
         Medications instance = new Medications();
         instance.setBTFlag(btFlag);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -342,7 +342,7 @@ public final class MedicationsTest {
         String side_effects = "";
         Medications instance = new Medications();
         instance.setSide_Effects(side_effects);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -355,7 +355,7 @@ public final class MedicationsTest {
         String interactions = "";
         Medications instance = new Medications();
         instance.setInteractions(interactions);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -368,7 +368,7 @@ public final class MedicationsTest {
         String warnings = "";
         Medications instance = new Medications();
         instance.setWarnings(warnings);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
     

@@ -147,8 +147,8 @@ Added adminCreateCondition.jsp
 Added adminCreateMedication.jsp
 Added adminUpdateCondition.jsp
 Added adminUpdateMedication.jsp
-Added insertMedication(), updateMedication(), deleteMedication to DataAccess class
-Added insertCondition(), updateCondition(), deleteCondition to DataAccess class
+Added insertMedication(), updateMedication(), deleteMedication() to DataAccess class
+Added insertCondition(), updateCondition(), deleteCondition() to DataAccess class
 Added create, update, and delete functionality to
 adminEditMedication.jsp?medID=XX
 adminAddMedication.jsp

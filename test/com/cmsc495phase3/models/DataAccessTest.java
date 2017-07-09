@@ -58,7 +58,7 @@ public final class DataAccessTest {
         ArrayList<Medications> expResult = null;
         ArrayList<Medications> result = DataAccess.selectAllMedications();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -72,7 +72,7 @@ public final class DataAccessTest {
         ArrayList<Medications> expResult = null;
         ArrayList<Medications> result = DataAccess.selectAllMedications(keypadLetterGroup);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -85,7 +85,7 @@ public final class DataAccessTest {
         ArrayList<Medications> expResult = null;
         ArrayList<Medications> result = DataAccess.selectMedicationsByGenericName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -99,7 +99,7 @@ public final class DataAccessTest {
         Medications expResult = null;
         Medications result = DataAccess.selectMedicationDetails(medID);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -112,7 +112,7 @@ public final class DataAccessTest {
         ArrayList<Conditions> expResult = null;
         ArrayList<Conditions> result = DataAccess.selectAllConditions();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -126,7 +126,7 @@ public final class DataAccessTest {
         ArrayList<Conditions> expResult = null;
         ArrayList<Conditions> result = DataAccess.selectAllConditions(keypadLetterGroup);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -140,7 +140,7 @@ public final class DataAccessTest {
         Conditions expResult = null;
         Conditions result = DataAccess.selectConditionDetails(conID);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -154,7 +154,7 @@ public final class DataAccessTest {
         ArrayList<Medications> expResult = null;
         ArrayList<Medications> result = DataAccess.selectMedicationsInCondition(conID);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -168,7 +168,7 @@ public final class DataAccessTest {
         Users expResult = null;
         Users result = DataAccess.selectUser(userName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -182,7 +182,7 @@ public final class DataAccessTest {
         String lastLogin = "";
         String newLogin = "";
         DataAccess.updateUserLastLogin(userID, lastLogin, newLogin);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -195,7 +195,7 @@ public final class DataAccessTest {
         ArrayList<Users> expResult = null;
         ArrayList<Users> result = DataAccess.selectAllUsers();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -210,7 +210,7 @@ public final class DataAccessTest {
         Boolean expResult = null;
         Boolean result = DataAccess.updateUserPassword(userID, newPasswordHash);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
     

@@ -60,7 +60,7 @@ public final class indexTest {
         HttpServletResponse response = null;
         index instance = new index();
         instance.processRequest(request, response);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -74,7 +74,7 @@ public final class indexTest {
         HttpServletResponse response = null;
         index instance = new index();
         instance.doGet(request, response);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -88,7 +88,7 @@ public final class indexTest {
         HttpServletResponse response = null;
         index instance = new index();
         instance.doPost(request, response);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -102,7 +102,7 @@ public final class indexTest {
         String expResult = "";
         String result = instance.getServletInfo();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
     

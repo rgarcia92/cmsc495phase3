@@ -58,7 +58,7 @@ public final class ConditionsTest {
         int expResult = 0;
         int result = instance.getConID();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -72,7 +72,7 @@ public final class ConditionsTest {
         String expResult = "";
         String result = instance.getCondition();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -86,7 +86,7 @@ public final class ConditionsTest {
         String expResult = "";
         String result = instance.getDescription();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -99,7 +99,7 @@ public final class ConditionsTest {
         int conID = 0;
         Conditions instance = new Conditions();
         instance.setConID(conID);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -112,7 +112,7 @@ public final class ConditionsTest {
         String condition = "";
         Conditions instance = new Conditions();
         instance.setCondition(condition);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -125,7 +125,7 @@ public final class ConditionsTest {
         String description = "";
         Conditions instance = new Conditions();
         instance.setDescription(description);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
     

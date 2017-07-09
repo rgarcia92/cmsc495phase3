@@ -62,7 +62,7 @@ public final class UtilitiesTest {
         Boolean expResult = null;
         Boolean result = Utilities.isMobile(request);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -76,7 +76,7 @@ public final class UtilitiesTest {
         String expResult = "";
         String result = Utilities.getPattern(keypadLetterGroup);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -90,7 +90,7 @@ public final class UtilitiesTest {
         Connection expResult = null;
         Connection result = Utilities.connectToDatabase(dbName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -103,7 +103,7 @@ public final class UtilitiesTest {
         String logEntry = "";
         Utilities instance = new Utilities();
         instance.logEvent(logEntry);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -117,7 +117,7 @@ public final class UtilitiesTest {
         ArrayList expResult = null;
         ArrayList result = instance.readEventLog();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -130,7 +130,7 @@ public final class UtilitiesTest {
         String emailAddress = "";
         Utilities instance = new Utilities();
         instance.sendCode(emailAddress);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -146,7 +146,7 @@ public final class UtilitiesTest {
         Boolean expResult = null;
         Boolean result = instance.authenticate(userName, password);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -162,7 +162,7 @@ public final class UtilitiesTest {
         String expResult = "";
         String result = instance.getPasswordHash(password, salt);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -174,7 +174,7 @@ public final class UtilitiesTest {
         System.out.println("removeBOM");
         Reader br = null;
         Utilities.removeBOM(br);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -190,7 +190,7 @@ public final class UtilitiesTest {
         boolean expResult = false;
         boolean result = instance.changePassword(userName, newPassword);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        // Review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
     

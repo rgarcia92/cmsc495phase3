@@ -577,15 +577,23 @@ public final class DataAccess {
      */
     public static Boolean insertMedication(String gName, String bName, String action, int btFlag, int dea, String side_effects, String interactions, String warnings) throws ClassNotFoundException, SQLException {
         Connection conn = Utilities.connectToDatabase("medications.db");
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, DEA, BTFLAG, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (((SELECT MAX(MEDID) FROM MEDICATIONS) + 1), ?, ?, ?, ?, ?, ?, ?, ?)");
-        stmt.setString(1, gName);
-        stmt.setString(2, bName);
-        stmt.setString(3, action);
-        stmt.setInt(5, btFlag);
-        stmt.setInt(4, dea);
-        stmt.setString(6, side_effects);
-        stmt.setString(7, interactions);
-        stmt.setString(8, warnings);
+        PreparedStatement stmt = conn.prepareStatement("SELECT MAX(MEDID) FROM MEDICATIONS");
+        ResultSet rs = stmt.executeQuery();
+        /* Check for data */
+        if (rs.next()) {
+            stmt = conn.prepareStatement("INSERT INTO MEDICATIONS (MEDID, GNAME, BNAME, ACTION, BTFLAG, DEA, SIDE_EFFECTS, INTERACTIONS, WARNINGS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1, rs.getInt(1) + 1);
+            stmt.setString(2, gName);
+            stmt.setString(3, bName);
+            stmt.setString(4, action);
+            stmt.setInt(5, btFlag);
+            stmt.setInt(6, dea);
+            stmt.setString(7, side_effects);
+            stmt.setString(8, interactions);
+            stmt.setString(9, warnings);
+        } else {
+            throw new IllegalArgumentException("No such condition");
+        }
         int check = stmt.executeUpdate();
         stmt.close();
         conn.close();
@@ -652,9 +660,17 @@ public final class DataAccess {
      */
     public static Boolean insertCondition(String condition, String description) throws ClassNotFoundException, SQLException {
         Connection conn = Utilities.connectToDatabase("medications.db");
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO CONDITIONS (CONID, CONDITION, DESCRIPTION) VALUES (((SELECT MAX(CONID) FROM CONDITIONS) + 1), ?, ?)");
-        stmt.setString(1, condition);
-        stmt.setString(2, description);
+        PreparedStatement stmt = conn.prepareStatement("SELECT MAX(MEDID) FROM MEDICATIONS");
+        ResultSet rs = stmt.executeQuery();
+        /* Check for data */
+        if (rs.next()) {
+            stmt = conn.prepareStatement("INSERT INTO CONDITIONS (CONID, CONDITION, DESCRIPTION) VALUES (?, ?, ?)");
+            stmt.setInt(1, rs.getInt(1) + 1);
+            stmt.setString(2, condition);
+            stmt.setString(3, description);
+        } else {
+            throw new IllegalArgumentException("No such condition");
+        }
         int check = stmt.executeUpdate();
         stmt.close();
         conn.close();
